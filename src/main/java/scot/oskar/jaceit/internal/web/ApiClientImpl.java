@@ -4,12 +4,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.*;
 import org.jetbrains.annotations.NotNull;
+import scot.oskar.jaceit.api.request.ApiCallback;
 import scot.oskar.jaceit.api.request.ApiClient;
-import scot.oskar.jaceit.internal.exception.ApiException;
-import scot.oskar.jaceit.internal.web.model.ApiErrorResponse;
+import scot.oskar.jaceit.api.exception.ApiException;
+import scot.oskar.jaceit.api.entity.ApiErrorResponse;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public class ApiClientImpl implements ApiClient {
 
@@ -29,6 +31,7 @@ public class ApiClientImpl implements ApiClient {
      * @param callback the callback to call when the request is complete
      * @param <T> the type to parse the response into
      */
+    @Override
     public <T> void getAsync(String url, Class<T> responseType, ApiCallback<T> callback) {
         final Request request = new Request.Builder()
                 .url(url)
@@ -62,6 +65,22 @@ public class ApiClientImpl implements ApiClient {
                 }
             }
         });
+    }
+
+    public <T> CompletableFuture<T> getAsync(String url, Class<T> responseType) {
+        CompletableFuture<T> future = new CompletableFuture<>();
+        getAsync(url, responseType, new ApiCallback<>() {
+            @Override
+            public void onSuccess(T result) {
+                future.complete(result);
+            }
+
+            @Override
+            public void onFailure(ApiException exception) {
+                future.completeExceptionally(exception);
+            }
+        });
+        return future;
     }
 
 }

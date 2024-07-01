@@ -1,4 +1,4 @@
-package scot.oskar.jaceit.internal.exception;
+package scot.oskar.jaceit.api.exception;
 
 /**
  * ApiException.

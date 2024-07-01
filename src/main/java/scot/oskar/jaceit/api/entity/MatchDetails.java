@@ -1,4 +1,4 @@
-package scot.oskar.jaceit.api.model;
+package scot.oskar.jaceit.api.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -1,4 +1,4 @@
-package scot.oskar.jaceit.api.model;
+package scot.oskar.jaceit.api.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -138,6 +138,13 @@ public class PlayerProfile {
         public String getSteam() {
             return steam;
         }
+
+        @Override
+        public String toString() {
+            return "Platforms{" +
+                    "steam='" + steam + '\'' +
+                    '}';
+        }
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -195,6 +202,20 @@ public class PlayerProfile {
         public String getGameProfileId() {
             return gameProfileId;
         }
+
+        @Override
+        public String toString() {
+            return "Game{" +
+                    "region='" + region + '\'' +
+                    ", gamePlayerId='" + gamePlayerId + '\'' +
+                    ", skillLevel=" + skillLevel +
+                    ", faceitElo=" + faceitElo +
+                    ", gamePlayerName='" + gamePlayerName + '\'' +
+                    ", skillLevelLabel='" + skillLevelLabel + '\'' +
+                    ", regions=" + regions +
+                    ", gameProfileId='" + gameProfileId + '\'' +
+                    '}';
+        }
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -204,6 +225,37 @@ public class PlayerProfile {
         public String getLanguage() {
             return language;
         }
+
+        @Override
+        public String toString() {
+            return "Settings{" +
+                    "language='" + language + '\'' +
+                    '}';
+        }
     }
 
+    @Override
+    public String toString() {
+        return "PlayerProfile{" +
+                "playerId='" + playerId + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", country='" + country + '\'' +
+                ", coverImage='" + coverImage + '\'' +
+                ", platforms=" + platforms +
+                ", games=" + games +
+                ", settings=" + settings +
+                ", friendsIds=" + friendsIds +
+                ", newSteamId='" + newSteamId + '\'' +
+                ", steamId64='" + steamId64 + '\'' +
+                ", steamNickname='" + steamNickname + '\'' +
+                ", memberships=" + memberships +
+                ", faceitUrl='" + faceitUrl + '\'' +
+                ", membershipType='" + membershipType + '\'' +
+                ", coverFeaturedImage='" + coverFeaturedImage + '\'' +
+                ", infractions=" + infractions +
+                ", verified=" + verified +
+                ", activatedAt='" + activatedAt + '\'' +
+                '}';
+    }
 }

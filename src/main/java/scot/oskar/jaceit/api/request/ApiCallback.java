@@ -1,7 +1,7 @@
-package scot.oskar.jaceit.internal.web;
+package scot.oskar.jaceit.api.request;
 
 
-import scot.oskar.jaceit.internal.exception.ApiException;
+import scot.oskar.jaceit.api.exception.ApiException;
 
 /**
  * Callback for API calls.

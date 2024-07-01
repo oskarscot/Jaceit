@@ -1,4 +1,4 @@
-package scot.oskar.jaceit.web;
+package scot.oskar.jaceit.internal.web;
 
 import okhttp3.Interceptor;
 import okhttp3.Response;
