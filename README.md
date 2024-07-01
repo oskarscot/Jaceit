@@ -12,7 +12,9 @@ public class Main {
                 .build();
 
         final PlayerProfile playerById = jaceit.players().getDetailsById("460dc92d-8af4-4260-8780-45758fa688f0");
-        
+
         System.out.println(playerById.getNickname()); // Prints: ITB_nexa
+    }
+}
 
 ```
