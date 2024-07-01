@@ -32,11 +32,13 @@ public class ApiClientImpl implements ApiClient {
      * @param <T> the type to parse the response into
      */
     @Override
-    public <T> void getAsync(String url, Class<T> responseType, ApiCallback<T> callback) {
+    public <T> void getBlocking(String url, Class<T> responseType, ApiCallback<T> callback) {
         final Request request = new Request.Builder()
                 .url(url)
                 .get()
                 .build();
+
+        System.out.printf("Executing request: %s%n", url);
 
         httpClient.newCall(request).enqueue(new Callback() {
             @Override
@@ -67,9 +69,18 @@ public class ApiClientImpl implements ApiClient {
         });
     }
 
+    /**
+     * Make a GET request to the Faceit API. The response will be parsed into the given type.
+     *
+     * @param url the url to call
+     * @param responseType the type to parse the response into
+     * @param <T> the type to parse the response into
+     * @return a CompletableFuture that will complete when the request is complete
+     */
+    @Override
     public <T> CompletableFuture<T> getAsync(String url, Class<T> responseType) {
         CompletableFuture<T> future = new CompletableFuture<>();
-        getAsync(url, responseType, new ApiCallback<>() {
+        getBlocking(url, responseType, new ApiCallback<>() {
             @Override
             public void onSuccess(T result) {
                 future.complete(result);

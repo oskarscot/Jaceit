@@ -20,10 +20,10 @@ public class PlayerEndpoint implements Players {
     }
 
     @Override
-    public PlayerProfile getDetailsById(String number) {
+    public PlayerProfile getDetailsById(String faceitId) {
         CompletableFuture<PlayerProfile> futureProfile = new CompletableFuture<>();
 
-        apiClient.getAsync(FACEIT_DATA_API + "players/" + number, PlayerProfile.class, new ApiCallback<>() {
+        apiClient.getBlocking(FACEIT_DATA_API + "players/" + faceitId, PlayerProfile.class, new ApiCallback<>() {
 
             @Override
             public void onSuccess(PlayerProfile result) {
@@ -43,18 +43,69 @@ public class PlayerEndpoint implements Players {
         }
     }
 
-    @Override
-    public void getDetailsById(String number, PlayerProfile playerProfile) {
 
+    @Override
+    public CompletableFuture<PlayerProfile> getDetailsByIdAsync(String faceitId) {
+        return apiClient.getAsync(FACEIT_DATA_API + "players/" + faceitId, PlayerProfile.class);
     }
 
     @Override
     public PlayerProfile getDetailsByNickname(String nickname, QueryParameters parameters) {
-        return null;
+        CompletableFuture<PlayerProfile> futureProfile = new CompletableFuture<>();
+        parameters.add("nickname", nickname);
+
+        apiClient.getBlocking(FACEIT_DATA_API + "players?" + parameters , PlayerProfile.class, new ApiCallback<>() {
+
+            @Override
+            public void onSuccess(PlayerProfile result) {
+                futureProfile.complete(result);
+            }
+
+            @Override
+            public void onFailure(ApiException exception) {
+                futureProfile.completeExceptionally(exception);
+            }
+        });
+
+        try {
+            return futureProfile.get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException("Failed to fetch player profile for nickname: " + nickname, e);
+        }
     }
 
     @Override
-    public void getDetailsByNickname(String nickname, QueryParameters parameters, PlayerProfile playerProfile) {
+    public PlayerProfile getDetailsByNickname(String nickname) {
+        CompletableFuture<PlayerProfile> futureProfile = new CompletableFuture<>();
 
+        apiClient.getBlocking(FACEIT_DATA_API + "players?nickname=" + nickname, PlayerProfile.class, new ApiCallback<>() {
+
+            @Override
+            public void onSuccess(PlayerProfile result) {
+                futureProfile.complete(result);
+            }
+
+            @Override
+            public void onFailure(ApiException exception) {
+                futureProfile.completeExceptionally(exception);
+            }
+        });
+
+        try {
+            return futureProfile.get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException("Failed to fetch player profile for nickname: " + nickname, e);
+        }
+    }
+
+    @Override
+    public CompletableFuture<PlayerProfile> getDetailsByNicknameAsync(String nickname, QueryParameters parameters) {
+        parameters.add("nickname", nickname);
+        return apiClient.getAsync( FACEIT_DATA_API + "players?" + parameters, PlayerProfile.class);
+    }
+
+    @Override
+    public CompletableFuture<PlayerProfile> getDetailsByNicknameAsync(String nickname) {
+        return apiClient.getAsync(FACEIT_DATA_API + "players?nickname=" + nickname, PlayerProfile.class);
     }
 }
