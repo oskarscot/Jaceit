@@ -3,6 +3,7 @@ import org.junit.jupiter.api.Test;
 import scot.oskar.jaceit.api.Jaceit;
 import scot.oskar.jaceit.api.JaceitBuilder;
 import scot.oskar.jaceit.api.entity.PlayerProfile;
+import scot.oskar.jaceit.api.entity.PlayerResults;
 import scot.oskar.jaceit.api.request.QueryParameters;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -62,8 +63,21 @@ public class JaceitTest {
     }
 
     @Test
-    public void getPlayerByNameAsync() {
+    public void testGetPlayerByNameAsync() {
         PlayerProfile playerByName = jaceit.players().getDetailsByNicknameAsync("ITB_nexa").join();
         assertEquals(playerByName.getNickname(), "ITB_nexa");
+    }
+
+    @Test
+    public void testGetResultsForPlayer() {
+        PlayerResults playerResults = jaceit.players().getLastResultsForGame("460dc92d-8af4-4260-8780-45758fa688f0", "cs2", QueryParameters.of("limit", "5"));
+        assertEquals(playerResults.getItems().size(), 5);
+    }
+
+    @Test
+    public void testGetResultsForPlayerInvalidLimit() {
+        assertThrows(IllegalArgumentException.class, () -> jaceit.players()
+                .getLastResultsForGame("460dc92d-8af4-4260-8780-45758fa688f0", "cs2",
+                        QueryParameters.of("limit", "five")));
     }
 }

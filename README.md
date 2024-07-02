@@ -1,5 +1,7 @@
 # Jaceit - A simple and easy to use Java Wrapper for the Faceit API
 
+WARNING: This project is still in development and is not ready for production use.
+
 Jaceit is light, with only dependencies being `Jackson` and `OkHttp`. It is also easy to use, with a simple and clean API.
 
 ## Example
@@ -23,3 +25,17 @@ public class Main {
 }
 
 ```
+
+## TODO
+
+- [ ] Replace all logging with SLF4J
+- [ ] Add more endpoints
+- [ ] Add more tests
+- [ ] Add more documentation
+
+## Future Plans
+
+- [ ] Webhook support
+- [ ] Rate limiting support
+- [ ] Caching support
+- [ ] More customization options

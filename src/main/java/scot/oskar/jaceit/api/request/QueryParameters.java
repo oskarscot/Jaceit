@@ -24,6 +24,14 @@ public class QueryParameters {
         }
     }
 
+    public String get(String key) {
+        return queryParameters.get(key);
+    }
+
+    public boolean contains(String key) {
+        return queryParameters.containsKey(key);
+    }
+
     public QueryParameters add(String key, String value) {
         queryParameters.put(key, value);
         return this;
