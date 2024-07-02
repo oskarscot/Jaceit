@@ -139,11 +139,34 @@ public class PlayerEndpoint implements Players {
         CompletableFuture<PlayerResults> futureResults = new CompletableFuture<>();
         String url = FACEIT_DATA_API + "players/" + playerId + "/games/" + game + "/stats?" + parameters;
         QueryValidator validator = new QueryValidator();
-        validator.addCheck("offset", s -> parameters.contains("limit"));
-        validator.addCheck("offset", s -> parameters.get("offset").matches("\\d+"));
+        validator.addCheck("offset", param -> parameters.contains("limit"));
+        validator.addCheck("offset", param -> param.matches("\\d+"));
+        validator.addCheck((ignored, params) -> {
+            if (params.containsKey("offset") && params.containsKey("limit")) {
+                try {
+                    int offset = Integer.parseInt(params.get("offset"));
+                    int limit = Integer.parseInt(params.get("limit"));
+                    return offset % limit == 0;
+                } catch (NumberFormatException e) {
+                    return false;
+                }
+            }
+            return true;
+        });
 
-        validator.addCheck("limit", s -> Integer.parseInt(parameters.get("limit")) >= 0);
-        validator.addCheck("limit", s -> parameters.get("limit").matches("\\d+"));
+        validator.addCheck("limit", param -> Integer.parseInt(param) >= 0);
+        validator.addCheck("limit", param -> param.matches("\\d+"));
+        validator.addCheck((ignored, params) -> {
+            if (params.containsKey("limit")) {
+                try {
+                    int limit = Integer.parseInt(params.get("limit"));
+                    return limit <= 100;
+                } catch (NumberFormatException e) {
+                    return false;
+                }
+            }
+            return true;
+        });
 
         if (!validator.validate(url)) {
             System.out.println("The URL is invalid: " + url);

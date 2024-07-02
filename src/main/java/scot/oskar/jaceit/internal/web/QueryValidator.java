@@ -2,22 +2,32 @@ package scot.oskar.jaceit.internal.web;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
 public class QueryValidator {
 
     private final Map<String, Predicate<String>> parameterChecks;
     private final Map<String, String> failedParameters;
+    private final List<BiPredicate<String, Map<String, String>>> customChecks;
 
     public QueryValidator() {
         this.parameterChecks = new HashMap<>();
         this.failedParameters = new HashMap<>();
+        this.customChecks = new ArrayList<>();
     }
 
     public QueryValidator addCheck(String parameter, Predicate<String> check) {
         parameterChecks.put(parameter, check);
+        return this;
+    }
+
+    public QueryValidator addCheck(BiPredicate<String, Map<String, String>> check) {
+        customChecks.add(check);
         return this;
     }
 
@@ -40,6 +50,14 @@ public class QueryValidator {
                 isValid = false;
             }
         }
+
+        // Apply custom checks if present
+        for (BiPredicate<String, Map<String, String>> customCheck : customChecks) {
+            if (!customCheck.test(null, parameters)) {
+                isValid = false;
+            }
+        }
+
         return isValid;
     }
 

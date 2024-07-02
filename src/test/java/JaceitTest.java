@@ -80,4 +80,18 @@ public class JaceitTest {
                 .getLastResultsForGame("460dc92d-8af4-4260-8780-45758fa688f0", "cs2",
                         QueryParameters.of("limit", "five")));
     }
+
+    @Test
+    public void testGetResultsForPlayerNegativeLimit() {
+        assertThrows(IllegalArgumentException.class, () -> jaceit.players()
+                .getLastResultsForGame("460dc92d-8af4-4260-8780-45758fa688f0", "cs2",
+                        QueryParameters.of("limit", "-1")));
+    }
+
+    @Test
+    public void testGetResultsForPlayerOffsetNotMultiple() {
+        assertThrows(IllegalArgumentException.class, () -> jaceit.players()
+                .getLastResultsForGame("460dc92d-8af4-4260-8780-45758fa688f0", "cs2",
+                        QueryParameters.of("limit", "3", "offset", "2")));
+    }
 }
