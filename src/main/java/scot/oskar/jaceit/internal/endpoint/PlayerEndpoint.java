@@ -1,6 +1,7 @@
 package scot.oskar.jaceit.internal.endpoint;
 
 import scot.oskar.jaceit.api.endpoint.Players;
+import scot.oskar.jaceit.api.entity.PlayerBans;
 import scot.oskar.jaceit.api.entity.PlayerProfile;
 import scot.oskar.jaceit.api.entity.PlayerResults;
 import scot.oskar.jaceit.api.exception.ApiException;
@@ -111,6 +112,7 @@ public class PlayerEndpoint implements Players {
         return apiClient.getAsync(FACEIT_DATA_API + "players?nickname=" + nickname, PlayerProfile.class);
     }
 
+    @Override
     public PlayerResults getLastResultsForGame(String playerId, String game) {
         CompletableFuture<PlayerResults> futureResults = new CompletableFuture<>();
 
@@ -197,7 +199,82 @@ public class PlayerEndpoint implements Players {
         }
     }
 
+    @Override
+    public CompletableFuture<PlayerResults> getResultsForGameAsync(String playerId, String game, QueryParameters parameters) {
+        String url = FACEIT_DATA_API + "players/" + playerId + "/games/" + game + "/stats?" + parameters;
+        QueryValidator validator = new QueryValidator();
+        validator.addCheck("offset", param -> parameters.contains("limit"));
+        validator.addCheck("offset", param -> param.matches("\\d+"));
+        validator.addCheck(params -> {
+            if (params.containsKey("offset")) {
+                if (!params.containsKey("limit")) {
+                    return false;
+                }
+                try {
+                    int offset = Integer.parseInt(params.get("offset"));
+                    int limit = Integer.parseInt(params.get("limit"));
+                    return offset % limit == 0;
+                } catch (NumberFormatException e) {
+                    return false;
+                }
+            }
+            return true;
+        });
+
+        validator.addCheck("limit", param -> Integer.parseInt(param) >= 0);
+        validator.addCheck("limit", param -> param.matches("\\d+"));
+        validator.addCheck(params -> {
+            if (params.containsKey("limit")) {
+                try {
+                    int limit = Integer.parseInt(params.get("limit"));
+                    return limit <= 100;
+                } catch (NumberFormatException e) {
+                    return false;
+                }
+            }
+            return true;
+        });
+
+        if (!validator.validate(url)) {
+            System.out.println("The URL is invalid: " + url);
+            System.out.println(validator.getErrors());
+            throw new IllegalArgumentException("Invalid query parameters: " + validator.getErrors());
+        }
+
+        return apiClient.getAsync(url, PlayerResults.class);
+    }
+
+    @Override
     public CompletableFuture<PlayerResults> getResultsForGameAsync(String playerId, String game) {
         return apiClient.getAsync(FACEIT_DATA_API + "players/" + playerId + "/games/" + game + "/stats", PlayerResults.class);
+    }
+
+    @Override
+    public PlayerBans getPlayerBans(String playerId) {
+        CompletableFuture<PlayerBans> futureBans = new CompletableFuture<>();
+
+        apiClient.getBlocking(FACEIT_DATA_API + "players/" + playerId + "/bans", PlayerBans.class, new ApiCallback<>() {
+
+            @Override
+            public void onSuccess(PlayerBans result) {
+                futureBans.complete(result);
+            }
+
+            @Override
+            public void onFailure(ApiException exception) {
+                futureBans.completeExceptionally(exception);
+            }
+        });
+
+        try {
+            return futureBans.get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException("Failed to fetch player bans for id: " + playerId, e);
+        }
+    }
+
+    @Override
+    public CompletableFuture<PlayerBans> getPlayerBansAsync(String playerId) {
+        return apiClient.getAsync(FACEIT_DATA_API + "players/" + playerId + "/bans", PlayerBans.class);
     }
 }

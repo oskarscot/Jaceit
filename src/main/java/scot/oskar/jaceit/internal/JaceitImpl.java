@@ -11,11 +11,11 @@ import scot.oskar.jaceit.internal.web.JaceitInterceptor;
 
 public class JaceitImpl implements Jaceit {
 
-    private final String apiKey;
-    private final OkHttpClient httpClient;
-    private final ObjectMapper objectMapper;
-    private final PlayerEndpoint playerEndpoint;
-    private ApiClient apiClient;
+    protected final String apiKey;
+    protected final OkHttpClient httpClient;
+    protected final ObjectMapper objectMapper;
+    protected final PlayerEndpoint playerEndpoint;
+    protected final ApiClient apiClient;
 
     public JaceitImpl(String apiKey, OkHttpClient httpClient, ObjectMapper objectMapper) {
         if (apiKey == null || apiKey.isBlank()) {

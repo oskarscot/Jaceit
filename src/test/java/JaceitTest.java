@@ -2,6 +2,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import scot.oskar.jaceit.api.Jaceit;
 import scot.oskar.jaceit.api.JaceitBuilder;
+import scot.oskar.jaceit.api.entity.PlayerBans;
 import scot.oskar.jaceit.api.entity.PlayerProfile;
 import scot.oskar.jaceit.api.entity.PlayerResults;
 import scot.oskar.jaceit.api.request.QueryParameters;
@@ -114,5 +115,11 @@ public class JaceitTest {
         assertThrows(IllegalArgumentException.class, () -> jaceit.players()
                 .getLastResultsForGame("460dc92d-8af4-4260-8780-45758fa688f0", "cs2",
                         QueryParameters.of("offset", "2")));
+    }
+
+    @Test
+    public void testGetPlayerBans() {
+        final PlayerBans playerBans = jaceit.players().getPlayerBans("ca130ed0-aec4-4823-970f-8e153ce190cf");
+        assertEquals(playerBans.getBans().size(), 1);
     }
 }

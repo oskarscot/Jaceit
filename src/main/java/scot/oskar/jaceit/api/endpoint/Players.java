@@ -1,5 +1,6 @@
 package scot.oskar.jaceit.api.endpoint;
 
+import scot.oskar.jaceit.api.entity.PlayerBans;
 import scot.oskar.jaceit.api.entity.PlayerProfile;
 import scot.oskar.jaceit.api.entity.PlayerResults;
 import scot.oskar.jaceit.api.request.QueryParameters;
@@ -16,6 +17,11 @@ public interface Players {
     CompletableFuture<PlayerProfile> getDetailsByNicknameAsync(String nickname, QueryParameters parameters);
     CompletableFuture<PlayerProfile> getDetailsByNicknameAsync(String nickname);
 
-
+    PlayerResults getLastResultsForGame(String playerId, String game);
     PlayerResults getLastResultsForGame(String playerId, String game, QueryParameters parameters);
+    CompletableFuture<PlayerResults> getResultsForGameAsync(String playerId, String game, QueryParameters parameters);
+    CompletableFuture<PlayerResults> getResultsForGameAsync(String playerId, String game);
+
+    PlayerBans getPlayerBans(String playerId);
+    CompletableFuture<PlayerBans> getPlayerBansAsync(String playerId);
 }
