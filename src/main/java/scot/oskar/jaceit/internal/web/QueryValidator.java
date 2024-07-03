@@ -13,12 +13,12 @@ public class QueryValidator {
 
     private final Map<String, Predicate<String>> parameterChecks;
     private final Map<String, String> failedParameters;
-    private final List<BiPredicate<String, Map<String, String>>> customChecks;
+    private List<Predicate<Map<String, String>>> compositeCheck;
 
     public QueryValidator() {
         this.parameterChecks = new HashMap<>();
         this.failedParameters = new HashMap<>();
-        this.customChecks = new ArrayList<>();
+        this.compositeCheck = new ArrayList<>();
     }
 
     public QueryValidator addCheck(String parameter, Predicate<String> check) {
@@ -26,8 +26,8 @@ public class QueryValidator {
         return this;
     }
 
-    public QueryValidator addCheck(BiPredicate<String, Map<String, String>> check) {
-        customChecks.add(check);
+    public QueryValidator addCheck(Predicate<Map<String, String>> check) {
+        this.compositeCheck.add(check);
         return this;
     }
 
@@ -51,10 +51,9 @@ public class QueryValidator {
             }
         }
 
-        // Apply custom checks if present
-        for (BiPredicate<String, Map<String, String>> customCheck : customChecks) {
-            if (!customCheck.test(null, parameters)) {
-                isValid = false;
+        for (Predicate<Map<String, String>> mapPredicate : compositeCheck) {
+            if (mapPredicate != null && !mapPredicate.test(parameters)) {
+                return false;
             }
         }
 

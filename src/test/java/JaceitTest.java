@@ -94,4 +94,25 @@ public class JaceitTest {
                 .getLastResultsForGame("460dc92d-8af4-4260-8780-45758fa688f0", "cs2",
                         QueryParameters.of("limit", "3", "offset", "2")));
     }
+
+    @Test
+    public void testGetResultsForPlayerInvalidOffset() {
+        assertThrows(IllegalArgumentException.class, () -> jaceit.players()
+                .getLastResultsForGame("460dc92d-8af4-4260-8780-45758fa688f0", "cs2",
+                        QueryParameters.of("offset", "two")));
+    }
+
+    @Test
+    public void testGetResultsForPlayerNegativeOffset() {
+        assertThrows(IllegalArgumentException.class, () -> jaceit.players()
+                .getLastResultsForGame("460dc92d-8af4-4260-8780-45758fa688f0", "cs2",
+                        QueryParameters.of("offset", "-1")));
+    }
+
+    @Test
+    public void testGetResultsForPlayerOffsetNoLimit() {
+        assertThrows(IllegalArgumentException.class, () -> jaceit.players()
+                .getLastResultsForGame("460dc92d-8af4-4260-8780-45758fa688f0", "cs2",
+                        QueryParameters.of("offset", "2")));
+    }
 }

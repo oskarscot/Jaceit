@@ -141,8 +141,11 @@ public class PlayerEndpoint implements Players {
         QueryValidator validator = new QueryValidator();
         validator.addCheck("offset", param -> parameters.contains("limit"));
         validator.addCheck("offset", param -> param.matches("\\d+"));
-        validator.addCheck((ignored, params) -> {
-            if (params.containsKey("offset") && params.containsKey("limit")) {
+        validator.addCheck(params -> {
+            if (params.containsKey("offset")) {
+                if (!params.containsKey("limit")) {
+                    return false;
+                }
                 try {
                     int offset = Integer.parseInt(params.get("offset"));
                     int limit = Integer.parseInt(params.get("limit"));
@@ -156,7 +159,7 @@ public class PlayerEndpoint implements Players {
 
         validator.addCheck("limit", param -> Integer.parseInt(param) >= 0);
         validator.addCheck("limit", param -> param.matches("\\d+"));
-        validator.addCheck((ignored, params) -> {
+        validator.addCheck(params -> {
             if (params.containsKey("limit")) {
                 try {
                     int limit = Integer.parseInt(params.get("limit"));
