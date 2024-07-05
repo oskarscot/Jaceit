@@ -3,12 +3,12 @@ import org.junit.jupiter.api.Test;
 import scot.oskar.jaceit.api.Jaceit;
 import scot.oskar.jaceit.api.JaceitBuilder;
 import scot.oskar.jaceit.api.entity.PlayerBans;
+import scot.oskar.jaceit.api.entity.PlayerMatchHistory;
 import scot.oskar.jaceit.api.entity.PlayerProfile;
 import scot.oskar.jaceit.api.entity.PlayerResults;
 import scot.oskar.jaceit.api.request.QueryParameters;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class JaceitTest {
 
@@ -121,5 +121,97 @@ public class JaceitTest {
     public void testGetPlayerBans() {
         final PlayerBans playerBans = jaceit.players().getPlayerBans("ca130ed0-aec4-4823-970f-8e153ce190cf");
         assertEquals(playerBans.getBans().size(), 1);
+    }
+
+    @Test
+    public void testGetMatchHistoryOffsetNotMultiple() {
+        assertThrows(IllegalArgumentException.class, () -> jaceit.players().getMatchHistory(
+                "460dc92d-8af4-4260-8780-45758fa688f0", "cs2",
+                QueryParameters.of("limit", "3", "offset", "2")));
+    }
+
+    @Test
+    public void testGetMatchHistoryInvalidOffset() {
+        assertThrows(IllegalArgumentException.class, () -> jaceit.players().getMatchHistory(
+                "460dc92d-8af4-4260-8780-45758fa688f0", "cs2",
+                QueryParameters.of("offset", "two")));
+    }
+
+    @Test
+    public void testGetMatchHistoryNegativeOffset() {
+        assertThrows(IllegalArgumentException.class, () -> jaceit.players().getMatchHistory(
+                "460dc92d-8af4-4260-8780-45758fa688f0", "cs2",
+                QueryParameters.of("offset", "-1")));
+    }
+
+    @Test
+    public void testGetMatchHistoryOffsetNoLimit() {
+        assertThrows(IllegalArgumentException.class, () -> jaceit.players().getMatchHistory(
+                "460dc92d-8af4-4260-8780-45758fa688f0", "cs2",
+                QueryParameters.of("offset", "2")));
+    }
+
+    @Test
+    public void testGetMatchHistoryLimitExceedsMax() {
+        assertThrows(IllegalArgumentException.class, () -> jaceit.players().getMatchHistory(
+                "460dc92d-8af4-4260-8780-45758fa688f0", "cs2",
+                QueryParameters.of("limit", "101")));
+    }
+
+    @Test
+    public void testGetMatchHistoryInvalidLimit() {
+        assertThrows(IllegalArgumentException.class, () -> jaceit.players().getMatchHistory(
+                "460dc92d-8af4-4260-8780-45758fa688f0", "cs2",
+                QueryParameters.of("limit", "one")));
+    }
+
+    @Test
+    public void testGetMatchHistoryNegativeLimit() {
+        assertThrows(IllegalArgumentException.class, () -> jaceit.players().getMatchHistory(
+                "460dc92d-8af4-4260-8780-45758fa688f0", "cs2",
+                QueryParameters.of("limit", "-1")));
+    }
+
+    @Test
+    public void testGetMatchHistoryInvalidFrom() {
+        assertThrows(IllegalArgumentException.class, () -> jaceit.players().getMatchHistory(
+                "460dc92d-8af4-4260-8780-45758fa688f0", "cs2",
+                QueryParameters.of("from", "abc")));
+    }
+
+    @Test
+    public void testGetMatchHistoryNegativeFrom() {
+        assertThrows(IllegalArgumentException.class, () -> jaceit.players().getMatchHistory(
+                "460dc92d-8af4-4260-8780-45758fa688f0", "cs2",
+                QueryParameters.of("from", "-1")));
+    }
+
+    @Test
+    public void testGetMatchHistoryInvalidTo() {
+        assertThrows(IllegalArgumentException.class, () -> jaceit.players().getMatchHistory(
+                "460dc92d-8af4-4260-8780-45758fa688f0", "cs2",
+                QueryParameters.of("to", "abc")));
+    }
+
+    @Test
+    public void testGetMatchHistoryNegativeTo() {
+        assertThrows(IllegalArgumentException.class, () -> jaceit.players().getMatchHistory(
+                "460dc92d-8af4-4260-8780-45758fa688f0", "cs2",
+                QueryParameters.of("to", "-1")));
+    }
+
+    @Test
+    public void testGetMatchHistoryFromAfterTo() {
+        assertThrows(IllegalArgumentException.class, () -> jaceit.players().getMatchHistory(
+                "460dc92d-8af4-4260-8780-45758fa688f0", "cs2",
+                QueryParameters.of("from", "1625097600", "to", "1622505600")));
+    }
+
+    @Test
+    public void testGetMatchHistoryValidParameters() {
+        PlayerMatchHistory matchHistory = jaceit.players().getMatchHistory(
+                "460dc92d-8af4-4260-8780-45758fa688f0", "cs2",
+                QueryParameters.of("offset", "10", "limit", "5", "from", "1720002882", "to", "1720179282"));
+        assertNotNull(matchHistory, "Match history should not be null");
     }
 }

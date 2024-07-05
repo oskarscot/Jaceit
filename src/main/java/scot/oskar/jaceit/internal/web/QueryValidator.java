@@ -1,33 +1,33 @@
 package scot.oskar.jaceit.internal.web;
 
+import scot.oskar.jaceit.internal.web.check.ParameterCheck;
+
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BiPredicate;
-import java.util.function.Predicate;
 
 public class QueryValidator {
 
-    private final Map<String, Predicate<String>> parameterChecks;
+    private final Map<String, List<ParameterCheck>> parameterChecks;
     private final Map<String, String> failedParameters;
-    private List<Predicate<Map<String, String>>> compositeCheck;
+    private final List<ParameterCheck> compositeChecks;
 
     public QueryValidator() {
         this.parameterChecks = new HashMap<>();
         this.failedParameters = new HashMap<>();
-        this.compositeCheck = new ArrayList<>();
+        this.compositeChecks = new ArrayList<>();
     }
 
-    public QueryValidator addCheck(String parameter, Predicate<String> check) {
-        parameterChecks.put(parameter, check);
+    public QueryValidator addCheck(String parameter, ParameterCheck check) {
+        parameterChecks.computeIfAbsent(parameter, k -> new ArrayList<>()).add(check);
         return this;
     }
 
-    public QueryValidator addCheck(Predicate<Map<String, String>> check) {
-        this.compositeCheck.add(check);
+    public QueryValidator addCompositeCheck(ParameterCheck check) {
+        this.compositeChecks.add(check);
         return this;
     }
 
@@ -43,16 +43,19 @@ public class QueryValidator {
 
         for (Map.Entry<String, String> entry : parameters.entrySet()) {
             String key = entry.getKey();
-            String value = entry.getValue();
-            Predicate<String> check = parameterChecks.get(key);
-            if (check != null && !check.test(value)) {
-                failedParameters.put(key, value);
-                isValid = false;
+            List<ParameterCheck> checks = parameterChecks.get(key);
+            if (checks != null) {
+                for (ParameterCheck check : checks) {
+                    if (!check.test(parameters, key)) {
+                        failedParameters.put(key, entry.getValue());
+                        isValid = false;
+                    }
+                }
             }
         }
 
-        for (Predicate<Map<String, String>> mapPredicate : compositeCheck) {
-            if (mapPredicate != null && !mapPredicate.test(parameters)) {
+        for (ParameterCheck check : compositeChecks) {
+            if (!check.test(parameters, null)) {
                 return false;
             }
         }

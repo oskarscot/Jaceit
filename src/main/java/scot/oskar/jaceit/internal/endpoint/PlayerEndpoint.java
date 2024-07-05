@@ -2,6 +2,7 @@ package scot.oskar.jaceit.internal.endpoint;
 
 import scot.oskar.jaceit.api.endpoint.Players;
 import scot.oskar.jaceit.api.entity.PlayerBans;
+import scot.oskar.jaceit.api.entity.PlayerMatchHistory;
 import scot.oskar.jaceit.api.entity.PlayerProfile;
 import scot.oskar.jaceit.api.entity.PlayerResults;
 import scot.oskar.jaceit.api.exception.ApiException;
@@ -9,6 +10,7 @@ import scot.oskar.jaceit.api.request.ApiCallback;
 import scot.oskar.jaceit.api.request.ApiClient;
 import scot.oskar.jaceit.api.request.QueryParameters;
 import scot.oskar.jaceit.internal.web.QueryValidator;
+import scot.oskar.jaceit.internal.web.check.*;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -141,37 +143,13 @@ public class PlayerEndpoint implements Players {
         CompletableFuture<PlayerResults> futureResults = new CompletableFuture<>();
         String url = FACEIT_DATA_API + "players/" + playerId + "/games/" + game + "/stats?" + parameters;
         QueryValidator validator = new QueryValidator();
-        validator.addCheck("offset", param -> parameters.contains("limit"));
-        validator.addCheck("offset", param -> param.matches("\\d+"));
-        validator.addCheck(params -> {
-            if (params.containsKey("offset")) {
-                if (!params.containsKey("limit")) {
-                    return false;
-                }
-                try {
-                    int offset = Integer.parseInt(params.get("offset"));
-                    int limit = Integer.parseInt(params.get("limit"));
-                    return offset % limit == 0;
-                } catch (NumberFormatException e) {
-                    return false;
-                }
-            }
-            return true;
-        });
+        validator.addCheck("offset", new ParametersContainValueCheck("limit"));
+        validator.addCheck("offset", new IntegerCheck());
+        validator.addCheck("offset", new OffsetDivisibleByLimitCheck());
 
-        validator.addCheck("limit", param -> Integer.parseInt(param) >= 0);
-        validator.addCheck("limit", param -> param.matches("\\d+"));
-        validator.addCheck(params -> {
-            if (params.containsKey("limit")) {
-                try {
-                    int limit = Integer.parseInt(params.get("limit"));
-                    return limit <= 100;
-                } catch (NumberFormatException e) {
-                    return false;
-                }
-            }
-            return true;
-        });
+        validator.addCheck("limit", new NonNegativeCheck());
+        validator.addCheck("limit", new IntegerCheck());
+        validator.addCheck("limit", new LimitCheck(100));
 
         if (!validator.validate(url)) {
             System.out.println("The URL is invalid: " + url);
@@ -203,37 +181,13 @@ public class PlayerEndpoint implements Players {
     public CompletableFuture<PlayerResults> getResultsForGameAsync(String playerId, String game, QueryParameters parameters) {
         String url = FACEIT_DATA_API + "players/" + playerId + "/games/" + game + "/stats?" + parameters;
         QueryValidator validator = new QueryValidator();
-        validator.addCheck("offset", param -> parameters.contains("limit"));
-        validator.addCheck("offset", param -> param.matches("\\d+"));
-        validator.addCheck(params -> {
-            if (params.containsKey("offset")) {
-                if (!params.containsKey("limit")) {
-                    return false;
-                }
-                try {
-                    int offset = Integer.parseInt(params.get("offset"));
-                    int limit = Integer.parseInt(params.get("limit"));
-                    return offset % limit == 0;
-                } catch (NumberFormatException e) {
-                    return false;
-                }
-            }
-            return true;
-        });
+        validator.addCheck("offset", new ParametersContainValueCheck("limit"));
+        validator.addCheck("offset", new IntegerCheck());
+        validator.addCheck("offset", new OffsetDivisibleByLimitCheck());
 
-        validator.addCheck("limit", param -> Integer.parseInt(param) >= 0);
-        validator.addCheck("limit", param -> param.matches("\\d+"));
-        validator.addCheck(params -> {
-            if (params.containsKey("limit")) {
-                try {
-                    int limit = Integer.parseInt(params.get("limit"));
-                    return limit <= 100;
-                } catch (NumberFormatException e) {
-                    return false;
-                }
-            }
-            return true;
-        });
+        validator.addCheck("limit", new NonNegativeCheck());
+        validator.addCheck("limit", new IntegerCheck());
+        validator.addCheck("limit", new LimitCheck(100));
 
         if (!validator.validate(url)) {
             System.out.println("The URL is invalid: " + url);
@@ -276,5 +230,78 @@ public class PlayerEndpoint implements Players {
     @Override
     public CompletableFuture<PlayerBans> getPlayerBansAsync(String playerId) {
         return apiClient.getAsync(FACEIT_DATA_API + "players/" + playerId + "/bans", PlayerBans.class);
+    }
+
+    public PlayerMatchHistory getMatchHistory(String playerId, String game) {
+        CompletableFuture<PlayerMatchHistory> futureMatchHistory = new CompletableFuture<>();
+        String url = FACEIT_DATA_API + "players/" + playerId + "/history?game=" + game;
+
+        apiClient.getBlocking(url, PlayerMatchHistory.class, new ApiCallback<>() {
+
+            @Override
+            public void onSuccess(PlayerMatchHistory result) {
+                futureMatchHistory.complete(result);
+            }
+
+            @Override
+            public void onFailure(ApiException exception) {
+                futureMatchHistory.completeExceptionally(exception);
+            }
+        });
+
+        try {
+            return futureMatchHistory.get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException("Failed to fetch player match history for id: " + playerId, e);
+        }
+    }
+
+    @Override
+    public PlayerMatchHistory getMatchHistory(String playerId, String game, QueryParameters parameters) {
+        CompletableFuture<PlayerMatchHistory> futureMatchHistory = new CompletableFuture<>();
+        parameters.add("game", game);
+        String url = FACEIT_DATA_API + "players/" + playerId + "/history?" + parameters;
+        QueryValidator validator = new QueryValidator();
+
+        validator.addCheck("offset", new ParametersContainValueCheck("limit"));
+        validator.addCheck("offset", new IntegerCheck());
+        validator.addCheck("offset", new OffsetDivisibleByLimitCheck());
+        validator.addCheck("offset", new NonNegativeCheck());
+
+        validator.addCheck("limit", new IntegerCheck());
+        validator.addCheck("limit", new NonNegativeCheck());
+        validator.addCheck("limit", new LimitCheck(100));
+
+        validator.addCheck("from", new IntegerCheck());
+        validator.addCheck("from", new NonNegativeCheck());
+        validator.addCheck("from", new FromBeforeToCheck());
+
+        validator.addCheck("to", new IntegerCheck());
+        validator.addCheck("to", new NonNegativeCheck());
+
+        if (!validator.validate(url)) {
+            System.out.println("The URL is invalid: " + url);
+            throw new IllegalArgumentException("Invalid query parameters: " + validator.getErrors());
+        }
+
+
+        apiClient.getBlocking(url, PlayerMatchHistory.class, new ApiCallback<>() {
+
+            @Override
+            public void onSuccess(PlayerMatchHistory result) {
+                futureMatchHistory.complete(result);
+            }
+
+            @Override
+            public void onFailure(ApiException exception) {
+                futureMatchHistory.completeExceptionally(exception);
+            }
+        });
+
+        try {
+            return futureMatchHistory.get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException("Failed to fetch player match history for id: " + playerId, e);
+        }
     }
 }
