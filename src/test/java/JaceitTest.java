@@ -2,10 +2,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import scot.oskar.jaceit.api.Jaceit;
 import scot.oskar.jaceit.api.JaceitBuilder;
-import scot.oskar.jaceit.api.entity.PlayerBans;
-import scot.oskar.jaceit.api.entity.PlayerMatchHistory;
-import scot.oskar.jaceit.api.entity.PlayerProfile;
-import scot.oskar.jaceit.api.entity.PlayerResults;
+import scot.oskar.jaceit.api.entity.*;
 import scot.oskar.jaceit.api.request.QueryParameters;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -213,5 +210,11 @@ public class JaceitTest {
                 "460dc92d-8af4-4260-8780-45758fa688f0", "cs2",
                 QueryParameters.of("offset", "10", "limit", "5", "from", "1720002882", "to", "1720179282"));
         assertNotNull(matchHistory, "Match history should not be null");
+    }
+
+    @Test
+    public void testGetPlayerHubs() {
+        PlayerHubs playerHubs = jaceit.players().getPlayerHubs("460dc92d-8af4-4260-8780-45758fa688f0");
+        assertNotNull(playerHubs, "Player hubs should not be null");
     }
 }

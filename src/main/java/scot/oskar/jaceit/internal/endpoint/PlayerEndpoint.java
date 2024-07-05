@@ -1,10 +1,7 @@
 package scot.oskar.jaceit.internal.endpoint;
 
 import scot.oskar.jaceit.api.endpoint.Players;
-import scot.oskar.jaceit.api.entity.PlayerBans;
-import scot.oskar.jaceit.api.entity.PlayerMatchHistory;
-import scot.oskar.jaceit.api.entity.PlayerProfile;
-import scot.oskar.jaceit.api.entity.PlayerResults;
+import scot.oskar.jaceit.api.entity.*;
 import scot.oskar.jaceit.api.exception.ApiException;
 import scot.oskar.jaceit.api.request.ApiCallback;
 import scot.oskar.jaceit.api.request.ApiClient;
@@ -152,8 +149,6 @@ public class PlayerEndpoint implements Players {
         validator.addCheck("limit", new LimitCheck(100));
 
         if (!validator.validate(url)) {
-            System.out.println("The URL is invalid: " + url);
-            System.out.println(validator.getErrors());
             throw new IllegalArgumentException("Invalid query parameters: " + validator.getErrors());
         }
 
@@ -190,8 +185,6 @@ public class PlayerEndpoint implements Players {
         validator.addCheck("limit", new LimitCheck(100));
 
         if (!validator.validate(url)) {
-            System.out.println("The URL is invalid: " + url);
-            System.out.println(validator.getErrors());
             throw new IllegalArgumentException("Invalid query parameters: " + validator.getErrors());
         }
 
@@ -232,6 +225,7 @@ public class PlayerEndpoint implements Players {
         return apiClient.getAsync(FACEIT_DATA_API + "players/" + playerId + "/bans", PlayerBans.class);
     }
 
+    @Override
     public PlayerMatchHistory getMatchHistory(String playerId, String game) {
         CompletableFuture<PlayerMatchHistory> futureMatchHistory = new CompletableFuture<>();
         String url = FACEIT_DATA_API + "players/" + playerId + "/history?game=" + game;
@@ -280,7 +274,6 @@ public class PlayerEndpoint implements Players {
         validator.addCheck("to", new NonNegativeCheck());
 
         if (!validator.validate(url)) {
-            System.out.println("The URL is invalid: " + url);
             throw new IllegalArgumentException("Invalid query parameters: " + validator.getErrors());
         }
 
@@ -302,6 +295,68 @@ public class PlayerEndpoint implements Players {
             return futureMatchHistory.get();
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException("Failed to fetch player match history for id: " + playerId, e);
+        }
+    }
+
+    @Override
+    public PlayerHubs getPlayerHubs(String playerId) {
+        CompletableFuture<PlayerHubs> futureHubs = new CompletableFuture<>();
+        String url = FACEIT_DATA_API + "players/" + playerId + "/hubs";
+
+        apiClient.getBlocking(url, PlayerHubs.class, new ApiCallback<>() {
+
+            @Override
+            public void onSuccess(PlayerHubs result) {
+                futureHubs.complete(result);
+            }
+
+            @Override
+            public void onFailure(ApiException exception) {
+                futureHubs.completeExceptionally(exception);
+            }
+        });
+
+        try {
+            return futureHubs.get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public PlayerHubs getPlayerHubs(String playerId, QueryParameters parameters) {
+        CompletableFuture<PlayerHubs> futureHubs = new CompletableFuture<>();
+        String url = FACEIT_DATA_API + "players/" + playerId + "/hubs?" + parameters;
+        QueryValidator validator = new QueryValidator()
+                .addCheck("offset", new ParametersContainValueCheck("limit"))
+                .addCheck("offset", new IntegerCheck())
+                .addCheck("offset", new OffsetDivisibleByLimitCheck())
+                .addCheck("offset", new NonNegativeCheck())
+                .addCheck("limit", new IntegerCheck())
+                .addCheck("limit", new NonNegativeCheck())
+                .addCheck("limit", new LimitCheck(50));
+
+        if (!validator.validate(url)) {
+            throw new IllegalArgumentException("Invalid query parameters: " + validator.getErrors());
+        }
+
+        apiClient.getBlocking(url, PlayerHubs.class, new ApiCallback<>() {
+
+            @Override
+            public void onSuccess(PlayerHubs result) {
+                futureHubs.complete(result);
+            }
+
+            @Override
+            public void onFailure(ApiException exception) {
+                futureHubs.completeExceptionally(exception);
+            }
+        });
+
+        try {
+            return futureHubs.get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
         }
     }
 }

@@ -1,9 +1,6 @@
 package scot.oskar.jaceit.api.endpoint;
 
-import scot.oskar.jaceit.api.entity.PlayerBans;
-import scot.oskar.jaceit.api.entity.PlayerMatchHistory;
-import scot.oskar.jaceit.api.entity.PlayerProfile;
-import scot.oskar.jaceit.api.entity.PlayerResults;
+import scot.oskar.jaceit.api.entity.*;
 import scot.oskar.jaceit.api.request.QueryParameters;
 
 import java.util.concurrent.CompletableFuture;
@@ -26,5 +23,9 @@ public interface Players {
     PlayerBans getPlayerBans(String playerId);
     CompletableFuture<PlayerBans> getPlayerBansAsync(String playerId);
 
+    PlayerMatchHistory getMatchHistory(String playerId, String game);
     PlayerMatchHistory getMatchHistory(String playerId, String game, QueryParameters parameters);
+
+    PlayerHubs getPlayerHubs(String playerId);
+    PlayerHubs getPlayerHubs(String playerId, QueryParameters parameters);
 }
