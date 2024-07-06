@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.*;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import scot.oskar.jaceit.api.request.ApiCallback;
 import scot.oskar.jaceit.api.request.ApiClient;
 import scot.oskar.jaceit.api.exception.ApiException;
@@ -15,6 +17,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class ApiClientImpl implements ApiClient {
 
+    private final Logger logger = LoggerFactory.getLogger("RequestLogger");
     private final OkHttpClient httpClient;
     private final ObjectMapper objectMapper;
 
@@ -38,9 +41,9 @@ public class ApiClientImpl implements ApiClient {
                 .get()
                 .build();
 
-        System.out.printf("Executing request: %s%n", url);
+        this.logger.info("Making GET request to %s".formatted(url));
 
-        httpClient.newCall(request).enqueue(new Callback() {
+        this.httpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 callback.onFailure(new ApiException("An error occurred while making the request", e));

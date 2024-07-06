@@ -1,5 +1,6 @@
 package scot.oskar.jaceit.internal.endpoint;
 
+import org.slf4j.Logger;
 import scot.oskar.jaceit.api.endpoint.Players;
 import scot.oskar.jaceit.api.entity.*;
 import scot.oskar.jaceit.api.exception.ApiException;
@@ -14,6 +15,7 @@ import java.util.concurrent.ExecutionException;
 
 public class PlayerEndpoint implements Players {
 
+    private final Logger logger = org.slf4j.LoggerFactory.getLogger("PlayerEndpoint");
     private final ApiClient apiClient;
     private final String FACEIT_DATA_API = "https://open.faceit.com/data/v4/";
 
@@ -148,8 +150,9 @@ public class PlayerEndpoint implements Players {
         validator.addCheck("limit", new IntegerCheck());
         validator.addCheck("limit", new LimitCheck(100));
 
-        if (!validator.validate(url)) {
-            throw new IllegalArgumentException("Invalid query parameters: " + validator.getErrors());
+        if (validator.invalid(url)) {
+            logger.warn("Invalid query parameters: {}", validator.getErrors());
+            throw new IllegalArgumentException("Invalid query parameters");
         }
 
         apiClient.getBlocking(url, PlayerResults.class, new ApiCallback<>() {
@@ -184,8 +187,9 @@ public class PlayerEndpoint implements Players {
         validator.addCheck("limit", new IntegerCheck());
         validator.addCheck("limit", new LimitCheck(100));
 
-        if (!validator.validate(url)) {
-            throw new IllegalArgumentException("Invalid query parameters: " + validator.getErrors());
+        if (validator.invalid(url)) {
+            logger.warn("Invalid query parameters: {}", validator.getErrors());
+            throw new IllegalArgumentException("Invalid query parameters");
         }
 
         return apiClient.getAsync(url, PlayerResults.class);
@@ -273,8 +277,9 @@ public class PlayerEndpoint implements Players {
         validator.addCheck("to", new IntegerCheck());
         validator.addCheck("to", new NonNegativeCheck());
 
-        if (!validator.validate(url)) {
-            throw new IllegalArgumentException("Invalid query parameters: " + validator.getErrors());
+        if (validator.invalid(url)) {
+            logger.warn("Invalid query parameters: {}", validator.getErrors());
+            throw new IllegalArgumentException("Invalid query parameters");
         }
 
 
@@ -336,8 +341,9 @@ public class PlayerEndpoint implements Players {
                 .addCheck("limit", new NonNegativeCheck())
                 .addCheck("limit", new LimitCheck(50));
 
-        if (!validator.validate(url)) {
-            throw new IllegalArgumentException("Invalid query parameters: " + validator.getErrors());
+        if (validator.invalid(url)) {
+            logger.warn("Invalid query parameters: {}", validator.getErrors());
+            throw new IllegalArgumentException("Invalid query parameters");
         }
 
         apiClient.getBlocking(url, PlayerHubs.class, new ApiCallback<>() {

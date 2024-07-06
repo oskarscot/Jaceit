@@ -31,11 +31,11 @@ public class QueryValidator {
         return this;
     }
 
-    public boolean validate(String url) {
+    public boolean invalid(String url) {
         failedParameters.clear();  // Clear previous errors
         String queryString = extractQueryString(url);
         if (queryString == null) {
-            return false;
+            return true;
         }
 
         Map<String, String> parameters = parseQueryString(queryString);
@@ -56,11 +56,11 @@ public class QueryValidator {
 
         for (ParameterCheck check : compositeChecks) {
             if (!check.test(parameters, null)) {
-                return false;
+                return true;
             }
         }
 
-        return isValid;
+        return !isValid;
     }
 
     private String extractQueryString(String url) {
