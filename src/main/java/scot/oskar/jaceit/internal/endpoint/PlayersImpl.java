@@ -1,9 +1,11 @@
 package scot.oskar.jaceit.internal.endpoint;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import scot.oskar.jaceit.api.endpoint.Players;
 import scot.oskar.jaceit.api.entity.*;
 import scot.oskar.jaceit.api.exception.ApiException;
+import scot.oskar.jaceit.api.exception.DataFetchException;
 import scot.oskar.jaceit.api.request.ApiCallback;
 import scot.oskar.jaceit.api.request.ApiClient;
 import scot.oskar.jaceit.api.request.QueryParameters;
@@ -18,7 +20,7 @@ import java.util.concurrent.ExecutionException;
 
 public class PlayersImpl implements Players {
 
-    private final Logger logger = org.slf4j.LoggerFactory.getLogger("PlayerEndpoint");
+    private final Logger logger = LoggerFactory.getLogger("PlayerEndpoint");
     private final ApiClient apiClient;
     private final String FACEIT_DATA_API = "https://open.faceit.com/data/v4/";
 
@@ -43,7 +45,7 @@ public class PlayersImpl implements Players {
         try {
             return future.get();
         } catch (InterruptedException | ExecutionException e) {
-            throw new RuntimeException("Failed to fetch data from URL: " + url, e);
+            throw new DataFetchException("Failed to fetch data: " + e.getMessage());
         }
     }
 
@@ -63,14 +65,14 @@ public class PlayersImpl implements Players {
 
 
     @Override
-    public PlayerProfile getDetailsById(String faceitId) {
-        return fetchSync(FACEIT_DATA_API + "players/" + faceitId, PlayerProfile.class);
+    public PlayerProfile getDetailsById(String playerId) {
+        return fetchSync(FACEIT_DATA_API + "players/" + playerId, PlayerProfile.class);
     }
 
 
     @Override
-    public CompletableFuture<PlayerProfile> getDetailsByIdAsync(String faceitId) {
-        return fetchAsync(FACEIT_DATA_API + "players/" + faceitId, PlayerProfile.class);
+    public CompletableFuture<PlayerProfile> getDetailsByIdAsync(String playerId) {
+        return fetchAsync(FACEIT_DATA_API + "players/" + playerId, PlayerProfile.class);
     }
 
     @Override

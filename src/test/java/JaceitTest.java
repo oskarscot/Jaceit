@@ -3,7 +3,11 @@ import org.junit.jupiter.api.Test;
 import scot.oskar.jaceit.api.Jaceit;
 import scot.oskar.jaceit.api.JaceitBuilder;
 import scot.oskar.jaceit.api.entity.*;
+import scot.oskar.jaceit.api.exception.DataFetchException;
 import scot.oskar.jaceit.api.request.QueryParameters;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -46,6 +50,17 @@ public class JaceitTest {
     public void testGetPlayerByName() {
         PlayerProfile playerByName = jaceit.players().getDetailsByNickname("ITB_nexa");
         assertEquals(playerByName.getNickname(), "ITB_nexa");
+    }
+
+    @Test
+    public void testGetPlayerByInvalidName() {
+        assertThrows(DataFetchException.class, () -> jaceit.players().getDetailsByNickname("invalid_name"));
+    }
+
+    @Test
+    public void testGetPlayerByInvalidNameAsync() {
+        CompletableFuture<PlayerProfile> future = jaceit.players().getDetailsByNicknameAsync("invalid_name");
+        assertThrows(CompletionException.class, future::join);
     }
 
     @Test
