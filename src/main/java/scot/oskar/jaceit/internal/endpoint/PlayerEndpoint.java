@@ -27,7 +27,7 @@ public class PlayerEndpoint implements Players {
     public PlayerProfile getDetailsById(String faceitId) {
         CompletableFuture<PlayerProfile> futureProfile = new CompletableFuture<>();
 
-        apiClient.getBlocking(FACEIT_DATA_API + "players/" + faceitId, PlayerProfile.class, new ApiCallback<>() {
+        apiClient.getWithCallback(FACEIT_DATA_API + "players/" + faceitId, PlayerProfile.class, new ApiCallback<>() {
 
             @Override
             public void onSuccess(PlayerProfile result) {
@@ -50,7 +50,7 @@ public class PlayerEndpoint implements Players {
 
     @Override
     public CompletableFuture<PlayerProfile> getDetailsByIdAsync(String faceitId) {
-        return apiClient.getAsync(FACEIT_DATA_API + "players/" + faceitId, PlayerProfile.class);
+        return apiClient.get(FACEIT_DATA_API + "players/" + faceitId, PlayerProfile.class);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class PlayerEndpoint implements Players {
         CompletableFuture<PlayerProfile> futureProfile = new CompletableFuture<>();
         parameters.add("nickname", nickname);
 
-        apiClient.getBlocking(FACEIT_DATA_API + "players?" + parameters , PlayerProfile.class, new ApiCallback<>() {
+        apiClient.getWithCallback(FACEIT_DATA_API + "players?" + parameters , PlayerProfile.class, new ApiCallback<>() {
 
             @Override
             public void onSuccess(PlayerProfile result) {
@@ -82,7 +82,7 @@ public class PlayerEndpoint implements Players {
     public PlayerProfile getDetailsByNickname(String nickname) {
         CompletableFuture<PlayerProfile> futureProfile = new CompletableFuture<>();
 
-        apiClient.getBlocking(FACEIT_DATA_API + "players?nickname=" + nickname, PlayerProfile.class, new ApiCallback<>() {
+        apiClient.getWithCallback(FACEIT_DATA_API + "players?nickname=" + nickname, PlayerProfile.class, new ApiCallback<>() {
 
             @Override
             public void onSuccess(PlayerProfile result) {
@@ -105,19 +105,19 @@ public class PlayerEndpoint implements Players {
     @Override
     public CompletableFuture<PlayerProfile> getDetailsByNicknameAsync(String nickname, QueryParameters parameters) {
         parameters.add("nickname", nickname);
-        return apiClient.getAsync( FACEIT_DATA_API + "players?" + parameters, PlayerProfile.class);
+        return apiClient.get( FACEIT_DATA_API + "players?" + parameters, PlayerProfile.class);
     }
 
     @Override
     public CompletableFuture<PlayerProfile> getDetailsByNicknameAsync(String nickname) {
-        return apiClient.getAsync(FACEIT_DATA_API + "players?nickname=" + nickname, PlayerProfile.class);
+        return apiClient.get(FACEIT_DATA_API + "players?nickname=" + nickname, PlayerProfile.class);
     }
 
     @Override
     public PlayerResults getLastResultsForGame(String playerId, String game) {
         CompletableFuture<PlayerResults> futureResults = new CompletableFuture<>();
 
-        apiClient.getBlocking(FACEIT_DATA_API + "players/" + playerId + "/games/" + game + "/stats", PlayerResults.class, new ApiCallback<>() {
+        apiClient.getWithCallback(FACEIT_DATA_API + "players/" + playerId + "/games/" + game + "/stats", PlayerResults.class, new ApiCallback<>() {
 
             @Override
             public void onSuccess(PlayerResults result) {
@@ -155,7 +155,7 @@ public class PlayerEndpoint implements Players {
             throw new IllegalArgumentException("Invalid query parameters");
         }
 
-        apiClient.getBlocking(url, PlayerResults.class, new ApiCallback<>() {
+        apiClient.getWithCallback(url, PlayerResults.class, new ApiCallback<>() {
 
             @Override
             public void onSuccess(PlayerResults result) {
@@ -192,19 +192,19 @@ public class PlayerEndpoint implements Players {
             throw new IllegalArgumentException("Invalid query parameters");
         }
 
-        return apiClient.getAsync(url, PlayerResults.class);
+        return apiClient.get(url, PlayerResults.class);
     }
 
     @Override
     public CompletableFuture<PlayerResults> getResultsForGameAsync(String playerId, String game) {
-        return apiClient.getAsync(FACEIT_DATA_API + "players/" + playerId + "/games/" + game + "/stats", PlayerResults.class);
+        return apiClient.get(FACEIT_DATA_API + "players/" + playerId + "/games/" + game + "/stats", PlayerResults.class);
     }
 
     @Override
     public PlayerBans getPlayerBans(String playerId) {
         CompletableFuture<PlayerBans> futureBans = new CompletableFuture<>();
 
-        apiClient.getBlocking(FACEIT_DATA_API + "players/" + playerId + "/bans", PlayerBans.class, new ApiCallback<>() {
+        apiClient.getWithCallback(FACEIT_DATA_API + "players/" + playerId + "/bans", PlayerBans.class, new ApiCallback<>() {
 
             @Override
             public void onSuccess(PlayerBans result) {
@@ -226,7 +226,7 @@ public class PlayerEndpoint implements Players {
 
     @Override
     public CompletableFuture<PlayerBans> getPlayerBansAsync(String playerId) {
-        return apiClient.getAsync(FACEIT_DATA_API + "players/" + playerId + "/bans", PlayerBans.class);
+        return apiClient.get(FACEIT_DATA_API + "players/" + playerId + "/bans", PlayerBans.class);
     }
 
     @Override
@@ -234,7 +234,7 @@ public class PlayerEndpoint implements Players {
         CompletableFuture<PlayerMatchHistory> futureMatchHistory = new CompletableFuture<>();
         String url = FACEIT_DATA_API + "players/" + playerId + "/history?game=" + game;
 
-        apiClient.getBlocking(url, PlayerMatchHistory.class, new ApiCallback<>() {
+        apiClient.getWithCallback(url, PlayerMatchHistory.class, new ApiCallback<>() {
 
             @Override
             public void onSuccess(PlayerMatchHistory result) {
@@ -283,7 +283,7 @@ public class PlayerEndpoint implements Players {
         }
 
 
-        apiClient.getBlocking(url, PlayerMatchHistory.class, new ApiCallback<>() {
+        apiClient.getWithCallback(url, PlayerMatchHistory.class, new ApiCallback<>() {
 
             @Override
             public void onSuccess(PlayerMatchHistory result) {
@@ -308,7 +308,7 @@ public class PlayerEndpoint implements Players {
         CompletableFuture<PlayerHubs> futureHubs = new CompletableFuture<>();
         String url = FACEIT_DATA_API + "players/" + playerId + "/hubs";
 
-        apiClient.getBlocking(url, PlayerHubs.class, new ApiCallback<>() {
+        apiClient.getWithCallback(url, PlayerHubs.class, new ApiCallback<>() {
 
             @Override
             public void onSuccess(PlayerHubs result) {
@@ -346,7 +346,7 @@ public class PlayerEndpoint implements Players {
             throw new IllegalArgumentException("Invalid query parameters");
         }
 
-        apiClient.getBlocking(url, PlayerHubs.class, new ApiCallback<>() {
+        apiClient.getWithCallback(url, PlayerHubs.class, new ApiCallback<>() {
 
             @Override
             public void onSuccess(PlayerHubs result) {

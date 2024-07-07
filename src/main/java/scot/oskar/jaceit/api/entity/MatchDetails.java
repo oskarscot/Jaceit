@@ -70,7 +70,6 @@ public class MatchDetails {
     @JsonProperty("faceit_url")
     private String faceitUrl;
 
-    // Getters only
     public String getMatchId() { return matchId; }
     public int getVersion() { return version; }
     public String getGame() { return game; }
@@ -119,7 +118,6 @@ public class MatchDetails {
         @JsonProperty("type")
         private String type;
 
-        // Getters only
         public String getFactionId() { return factionId; }
         public String getLeader() { return leader; }
         public String getAvatar() { return avatar; }
@@ -155,7 +153,6 @@ public class MatchDetails {
             @JsonProperty("anticheat_required")
             private boolean anticheatRequired;
 
-            // Getters only
             public String getPlayerId() { return playerId; }
             public String getNickname() { return nickname; }
             public String getAvatar() { return avatar; }
@@ -177,7 +174,6 @@ public class MatchDetails {
             @JsonProperty("rating")
             private int rating;
 
-            // Getters only
             public double getWinProbability() { return winProbability; }
             public SkillLevel getSkillLevel() { return skillLevel; }
             public int getRating() { return rating; }
@@ -190,7 +186,6 @@ public class MatchDetails {
                 @JsonProperty("range")
                 private Range range;
 
-                // Getters only
                 public int getAverage() { return average; }
                 public Range getRange() { return range; }
 
@@ -202,7 +197,6 @@ public class MatchDetails {
                     @JsonProperty("max")
                     private int max;
 
-                    // Getters only
                     public int getMin() { return min; }
                     public int getMax() { return max; }
                 }
@@ -221,7 +215,6 @@ public class MatchDetails {
         @JsonProperty("location")
         private LocationVoting locationVoting;
 
-        // Getters only
         public MapVoting getMapVoting() { return mapVoting; }
         public List<String> getVotedEntityTypes() { return votedEntityTypes; }
         public LocationVoting getLocationVoting() { return locationVoting; }
@@ -234,7 +227,6 @@ public class MatchDetails {
             @JsonProperty("pick")
             private List<String> pick;
 
-            // Getters only
             public List<MapEntity> getEntities() { return entities; }
             public List<String> getPick() { return pick; }
 

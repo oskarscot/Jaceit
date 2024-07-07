@@ -27,7 +27,7 @@ public class ApiClientImpl implements ApiClient {
     }
 
     @Override
-    public <T> void getBlocking(String url, Class<T> responseType, ApiCallback<T> callback) {
+    public <T> void getWithCallback(String url, Class<T> responseType, ApiCallback<T> callback) {
         final Request request = new Request.Builder()
                 .url(url)
                 .get()
@@ -68,9 +68,9 @@ public class ApiClientImpl implements ApiClient {
     }
 
     @Override
-    public <T> CompletableFuture<T> getAsync(String url, Class<T> responseType) {
+    public <T> CompletableFuture<T> get(String url, Class<T> responseType) {
         CompletableFuture<T> future = new CompletableFuture<>();
-        getBlocking(url, responseType, new ApiCallback<>() {
+        getWithCallback(url, responseType, new ApiCallback<>() {
             @Override
             public void onSuccess(T result) {
                 future.complete(result);

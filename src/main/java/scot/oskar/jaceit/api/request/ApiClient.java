@@ -14,7 +14,7 @@ public interface ApiClient {
      * @param responseType the type to parse the response into
      * @param callback the callback to call when the request is complete
      */
-    <T> void getBlocking(String url, Class<T> responseType, ApiCallback<T> callback);
+    <T> void getWithCallback(String url, Class<T> responseType, ApiCallback<T> callback);
 
     /**
      * Make a GET request to the Faceit API. The response will be parsed into the given type. This method will return a
@@ -23,5 +23,5 @@ public interface ApiClient {
      * @param responseType the type to parse the response into
      * @return a CompletableFuture that will complete when the request is complete
      */
-    <T> CompletableFuture<T> getAsync(String url, Class<T> responseType);
+    <T> CompletableFuture<T> get(String url, Class<T> responseType);
 }

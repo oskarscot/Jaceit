@@ -28,10 +28,10 @@ public class Main {
 
 ## TODO
 
-- [ ] Replace all logging with SLF4J
-- [ ] Add more endpoints
-- [ ] Add more tests
-- [ ] Add more documentation
+- [x] Replace all logging with SLF4J
+- [ ] Implement all endpoints
+- [ ] Complete documentation
+- [ ] Redesign the ApiClient class
 
 ## Future Plans
 
