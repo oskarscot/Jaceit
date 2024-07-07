@@ -9,6 +9,8 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * Represents the players endpoint within the FACEIT Data API
+ * This interface defines the methods to access all endpoints provided in the API.
+ * The implementation of this interface is provided by the {@link scot.oskar.jaceit.internal.endpoint.PlayersImpl} class
  */
 public interface Players {
 

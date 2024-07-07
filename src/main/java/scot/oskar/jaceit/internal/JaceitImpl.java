@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import scot.oskar.jaceit.api.Jaceit;
 import scot.oskar.jaceit.api.endpoint.Players;
 import scot.oskar.jaceit.api.request.ApiClient;
-import scot.oskar.jaceit.internal.endpoint.PlayerEndpoint;
+import scot.oskar.jaceit.internal.endpoint.PlayersImpl;
 import scot.oskar.jaceit.internal.web.ApiClientImpl;
 import scot.oskar.jaceit.internal.web.JaceitInterceptor;
 
@@ -17,7 +17,7 @@ public class JaceitImpl implements Jaceit {
     protected final String apiKey;
     protected final OkHttpClient httpClient;
     protected final ObjectMapper objectMapper;
-    protected final PlayerEndpoint playerEndpoint;
+    protected final PlayersImpl playerEndpoint;
     protected final ApiClient apiClient;
 
     public JaceitImpl(String apiKey, OkHttpClient httpClient, ObjectMapper objectMapper) {
@@ -36,7 +36,7 @@ public class JaceitImpl implements Jaceit {
         logger.trace("Creating API client and endpoints...");
         this.apiClient = new ApiClientImpl(this.httpClient, this.objectMapper);
 
-        this.playerEndpoint = new PlayerEndpoint(this.apiClient);
+        this.playerEndpoint = new PlayersImpl(this.apiClient);
         logger.trace("Jaceit instance created");
     }
 

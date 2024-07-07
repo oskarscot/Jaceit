@@ -6,7 +6,7 @@ import scot.oskar.jaceit.api.request.ApiClient;
 public interface Jaceit {
 
     /**
-     *  Gets the api client that is used to make web requests to the faceit api.
+     * Gets the api client that is used to make web requests to the faceit api.
      *
      * @return the api client used to make requests
      */

@@ -1,7 +1,6 @@
 package scot.oskar.jaceit.api.exception;
 
 /**
- * ApiException.
  * An exception that is thrown when an error occurs while interacting with the FACEIT API.
  **/
 public class ApiException extends Exception {
