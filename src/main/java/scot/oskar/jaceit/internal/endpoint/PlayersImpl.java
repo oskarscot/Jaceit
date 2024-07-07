@@ -20,7 +20,7 @@ import java.util.concurrent.ExecutionException;
 
 public class PlayersImpl implements Players {
 
-    private final Logger logger = LoggerFactory.getLogger("PlayerEndpoint");
+    private final Logger logger = LoggerFactory.getLogger("Players");
     private final ApiClient apiClient;
     private final String FACEIT_DATA_API = "https://open.faceit.com/data/v4/";
 

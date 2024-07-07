@@ -5,8 +5,10 @@ import okhttp3.OkHttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import scot.oskar.jaceit.api.Jaceit;
+import scot.oskar.jaceit.api.endpoint.Matches;
 import scot.oskar.jaceit.api.endpoint.Players;
 import scot.oskar.jaceit.api.request.ApiClient;
+import scot.oskar.jaceit.internal.endpoint.MatchesImpl;
 import scot.oskar.jaceit.internal.endpoint.PlayersImpl;
 import scot.oskar.jaceit.internal.web.ApiClientImpl;
 import scot.oskar.jaceit.internal.web.JaceitInterceptor;
@@ -18,6 +20,7 @@ public class JaceitImpl implements Jaceit {
     protected final OkHttpClient httpClient;
     protected final ObjectMapper objectMapper;
     protected final PlayersImpl playerEndpoint;
+    protected final MatchesImpl matchEndpoint;
     protected final ApiClient apiClient;
 
     public JaceitImpl(String apiKey, OkHttpClient httpClient, ObjectMapper objectMapper) {
@@ -37,6 +40,7 @@ public class JaceitImpl implements Jaceit {
         this.apiClient = new ApiClientImpl(this.httpClient, this.objectMapper);
 
         this.playerEndpoint = new PlayersImpl(this.apiClient);
+        this.matchEndpoint = new MatchesImpl(this.apiClient);
         logger.trace("Jaceit instance created");
     }
 
@@ -48,5 +52,10 @@ public class JaceitImpl implements Jaceit {
     @Override
     public Players players() {
         return this.playerEndpoint;
+    }
+
+    @Override
+    public Matches matches() {
+        return this.matchEndpoint;
     }
 }

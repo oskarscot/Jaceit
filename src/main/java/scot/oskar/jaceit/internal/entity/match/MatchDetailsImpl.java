@@ -1,11 +1,12 @@
-package scot.oskar.jaceit.api.entity;
+package scot.oskar.jaceit.internal.entity.match;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import scot.oskar.jaceit.api.entity.match.MatchDetails;
 
 import java.util.List;
 import java.util.Map;
 
-public class MatchDetails {
+public class MatchDetailsImpl implements MatchDetails {
 
     @JsonProperty("match_id")
     private String matchId;
@@ -70,29 +71,91 @@ public class MatchDetails {
     @JsonProperty("faceit_url")
     private String faceitUrl;
 
-    public String getMatchId() { return matchId; }
-    public int getVersion() { return version; }
-    public String getGame() { return game; }
-    public String getRegion() { return region; }
-    public String getCompetitionId() { return competitionId; }
-    public String getCompetitionType() { return competitionType; }
-    public String getCompetitionName() { return competitionName; }
-    public String getOrganizerId() { return organizerId; }
-    public Map<String, Team> getTeams() { return teams; }
-    public Voting getVoting() { return voting; }
-    public boolean isCalculateElo() { return calculateElo; }
-    public long getConfiguredAt() { return configuredAt; }
-    public long getStartedAt() { return startedAt; }
-    public long getFinishedAt() { return finishedAt; }
-    public List<String> getDemoUrl() { return demoUrl; }
-    public String getChatRoomId() { return chatRoomId; }
-    public int getBestOf() { return bestOf; }
-    public Results getResults() { return results; }
-    public List<DetailedResult> getDetailedResults() { return detailedResults; }
-    public String getStatus() { return status; }
-    public String getFaceitUrl() { return faceitUrl; }
+    public String getMatchId() {
+        return matchId;
+    }
 
-    public static class Team {
+    public int getVersion() {
+        return version;
+    }
+
+    public String getGame() {
+        return game;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public String getCompetitionId() {
+        return competitionId;
+    }
+
+    public String getCompetitionType() {
+        return competitionType;
+    }
+
+    public String getCompetitionName() {
+        return competitionName;
+    }
+
+    public String getOrganizerId() {
+        return organizerId;
+    }
+
+    public Map<String, Team> getTeams() {
+        return teams;
+    }
+
+    public Voting getVoting() {
+        return voting;
+    }
+
+    public boolean isCalculateElo() {
+        return calculateElo;
+    }
+
+    public long getConfiguredAt() {
+        return configuredAt;
+    }
+
+    public long getStartedAt() {
+        return startedAt;
+    }
+
+    public long getFinishedAt() {
+        return finishedAt;
+    }
+
+    public List<String> getDemoUrl() {
+        return demoUrl;
+    }
+
+    public String getChatRoomId() {
+        return chatRoomId;
+    }
+
+    public int getBestOf() {
+        return bestOf;
+    }
+
+    public Results getResults() {
+        return results;
+    }
+
+    public List<DetailedResult> getDetailedResults() {
+        return detailedResults;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public String getFaceitUrl() {
+        return faceitUrl;
+    }
+
+    public static class TeamImpl implements Team {
 
         @JsonProperty("faction_id")
         private String factionId;
@@ -118,16 +181,39 @@ public class MatchDetails {
         @JsonProperty("type")
         private String type;
 
-        public String getFactionId() { return factionId; }
-        public String getLeader() { return leader; }
-        public String getAvatar() { return avatar; }
-        public List<Player> getRoster() { return roster; }
-        public Stats getStats() { return stats; }
-        public boolean isSubstituted() { return substituted; }
-        public String getName() { return name; }
-        public String getType() { return type; }
+        public String getFactionId() {
+            return factionId;
+        }
 
-        public static class Player {
+        public String getLeader() {
+            return leader;
+        }
+
+        public String getAvatar() {
+            return avatar;
+        }
+
+        public List<Player> getRoster() {
+            return roster;
+        }
+
+        public Stats getStats() {
+            return stats;
+        }
+
+        public boolean isSubstituted() {
+            return substituted;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public static class PlayerImpl implements Player {
 
             @JsonProperty("player_id")
             private String playerId;
@@ -153,17 +239,40 @@ public class MatchDetails {
             @JsonProperty("anticheat_required")
             private boolean anticheatRequired;
 
-            public String getPlayerId() { return playerId; }
-            public String getNickname() { return nickname; }
-            public String getAvatar() { return avatar; }
-            public String getMembership() { return membership; }
-            public String getGamePlayerId() { return gamePlayerId; }
-            public String getGamePlayerName() { return gamePlayerName; }
-            public int getGameSkillLevel() { return gameSkillLevel; }
-            public boolean isAnticheatRequired() { return anticheatRequired; }
+            public String getPlayerId() {
+                return playerId;
+            }
+
+            public String getNickname() {
+                return nickname;
+            }
+
+            public String getAvatar() {
+                return avatar;
+            }
+
+            public String getMembership() {
+                return membership;
+            }
+
+            public String getGamePlayerId() {
+                return gamePlayerId;
+            }
+
+            public String getGamePlayerName() {
+                return gamePlayerName;
+            }
+
+            public int getGameSkillLevel() {
+                return gameSkillLevel;
+            }
+
+            public boolean isAnticheatRequired() {
+                return anticheatRequired;
+            }
         }
 
-        public static class Stats {
+        public static class StatsImpl implements Stats {
 
             @JsonProperty("winProbability")
             private double winProbability;
@@ -174,11 +283,19 @@ public class MatchDetails {
             @JsonProperty("rating")
             private int rating;
 
-            public double getWinProbability() { return winProbability; }
-            public SkillLevel getSkillLevel() { return skillLevel; }
-            public int getRating() { return rating; }
+            public double getWinProbability() {
+                return winProbability;
+            }
 
-            public static class SkillLevel {
+            public SkillLevel getSkillLevel() {
+                return skillLevel;
+            }
+
+            public int getRating() {
+                return rating;
+            }
+
+            public static class SkillLevelImpl implements SkillLevel {
 
                 @JsonProperty("average")
                 private int average;
@@ -186,10 +303,15 @@ public class MatchDetails {
                 @JsonProperty("range")
                 private Range range;
 
-                public int getAverage() { return average; }
-                public Range getRange() { return range; }
+                public int getAverage() {
+                    return average;
+                }
 
-                public static class Range {
+                public Range getRange() {
+                    return range;
+                }
+
+                public static class RangeImpl implements Range {
 
                     @JsonProperty("min")
                     private int min;
@@ -197,14 +319,19 @@ public class MatchDetails {
                     @JsonProperty("max")
                     private int max;
 
-                    public int getMin() { return min; }
-                    public int getMax() { return max; }
+                    public int getMin() {
+                        return min;
+                    }
+
+                    public int getMax() {
+                        return max;
+                    }
                 }
             }
         }
     }
 
-    public static class Voting {
+    public static class VotingImpl implements Voting {
 
         @JsonProperty("map")
         private MapVoting mapVoting;
@@ -215,11 +342,19 @@ public class MatchDetails {
         @JsonProperty("location")
         private LocationVoting locationVoting;
 
-        public MapVoting getMapVoting() { return mapVoting; }
-        public List<String> getVotedEntityTypes() { return votedEntityTypes; }
-        public LocationVoting getLocationVoting() { return locationVoting; }
+        public MapVoting getMapVoting() {
+            return mapVoting;
+        }
 
-        public static class MapVoting {
+        public List<String> getVotedEntityTypes() {
+            return votedEntityTypes;
+        }
+
+        public LocationVoting getLocationVoting() {
+            return locationVoting;
+        }
+
+        public static class MapVotingImpl implements MapVoting {
 
             @JsonProperty("entities")
             private List<MapEntity> entities;
@@ -227,10 +362,15 @@ public class MatchDetails {
             @JsonProperty("pick")
             private List<String> pick;
 
-            public List<MapEntity> getEntities() { return entities; }
-            public List<String> getPick() { return pick; }
+            public List<MapEntity> getEntities() {
+                return entities;
+            }
 
-            public static class MapEntity {
+            public List<String> getPick() {
+                return pick;
+            }
+
+            public static class MapEntityImpl implements MapEntity {
 
                 @JsonProperty("guid")
                 private String guid;
@@ -276,7 +416,7 @@ public class MatchDetails {
             }
         }
 
-        public static class LocationVoting {
+        public static class LocationVotingImpl implements LocationVoting {
 
             @JsonProperty("entities")
             private List<LocationEntity> entities;
@@ -287,11 +427,12 @@ public class MatchDetails {
             public List<LocationEntity> getEntities() {
                 return entities;
             }
+
             public List<String> getPick() {
                 return pick;
             }
 
-            public static class LocationEntity {
+            public static class LocationEntityImpl implements LocationEntity {
 
                 @JsonProperty("image_lg")
                 private String imageLg;
@@ -314,18 +455,23 @@ public class MatchDetails {
                 public String getImageLarge() {
                     return imageLg;
                 }
+
                 public String getImageSmall() {
                     return imageSm;
                 }
+
                 public String getName() {
                     return name;
                 }
+
                 public String getClassName() {
                     return className;
                 }
+
                 public String getGameLocationId() {
                     return gameLocationId;
                 }
+
                 public String getGuid() {
                     return guid;
                 }
@@ -333,7 +479,7 @@ public class MatchDetails {
         }
     }
 
-    public static class Results {
+    public static class ResultsImpl implements Results {
 
         @JsonProperty("winner")
         private String winner;
@@ -344,12 +490,13 @@ public class MatchDetails {
         public String getWinner() {
             return winner;
         }
+
         public Map<String, Integer> getScore() {
             return score;
         }
     }
 
-    public static class DetailedResult {
+    public static class DetailedResultImpl implements DetailedResult {
 
         @JsonProperty("asc_score")
         private boolean ascScore;
@@ -373,7 +520,7 @@ public class MatchDetails {
         }
     }
 
-    public static class Faction {
+    public static class FactionImpl implements Faction {
 
         @JsonProperty("score")
         private int score;
