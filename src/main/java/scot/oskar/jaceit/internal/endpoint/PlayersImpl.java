@@ -3,7 +3,7 @@ package scot.oskar.jaceit.internal.endpoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import scot.oskar.jaceit.api.endpoint.Players;
-import scot.oskar.jaceit.api.entity.*;
+import scot.oskar.jaceit.api.entity.player.*;
 import scot.oskar.jaceit.api.exception.ApiException;
 import scot.oskar.jaceit.api.exception.DataFetchException;
 import scot.oskar.jaceit.api.request.ApiCallback;

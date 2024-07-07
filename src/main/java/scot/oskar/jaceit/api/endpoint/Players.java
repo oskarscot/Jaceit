@@ -1,10 +1,10 @@
 package scot.oskar.jaceit.api.endpoint;
 
-import scot.oskar.jaceit.api.entity.*;
+import scot.oskar.jaceit.api.entity.player.*;
 import scot.oskar.jaceit.api.request.QueryParameters;
 import scot.oskar.jaceit.api.exception.DataFetchException;
-import scot.oskar.jaceit.internal.entity.PlayerProfileImpl;
-import scot.oskar.jaceit.internal.entity.PlayerResultsImpl;
+import scot.oskar.jaceit.internal.entity.player.PlayerProfileImpl;
+import scot.oskar.jaceit.internal.entity.player.PlayerResultsImpl;
 
 import java.util.concurrent.CompletableFuture;
 

@@ -2,7 +2,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import scot.oskar.jaceit.api.Jaceit;
 import scot.oskar.jaceit.api.JaceitBuilder;
-import scot.oskar.jaceit.api.entity.*;
+import scot.oskar.jaceit.api.entity.player.*;
 import scot.oskar.jaceit.api.exception.DataFetchException;
 import scot.oskar.jaceit.api.request.QueryParameters;
 

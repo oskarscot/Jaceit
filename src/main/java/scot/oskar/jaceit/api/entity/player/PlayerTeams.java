@@ -1,7 +1,7 @@
-package scot.oskar.jaceit.api.entity;
+package scot.oskar.jaceit.api.entity.player;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import scot.oskar.jaceit.internal.entity.PlayerTeamsImpl;
+import scot.oskar.jaceit.internal.entity.player.PlayerTeamsImpl;
 
 import java.util.List;
 

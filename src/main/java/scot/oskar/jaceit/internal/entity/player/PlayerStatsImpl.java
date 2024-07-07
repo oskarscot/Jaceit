@@ -1,7 +1,7 @@
-package scot.oskar.jaceit.internal.entity;
+package scot.oskar.jaceit.internal.entity.player;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import scot.oskar.jaceit.api.entity.PlayerStats;
+import scot.oskar.jaceit.api.entity.player.PlayerStats;
 
 import java.util.List;
 
