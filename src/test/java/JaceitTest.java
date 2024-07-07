@@ -232,4 +232,35 @@ public class JaceitTest {
         PlayerHubs playerHubs = jaceit.players().getPlayerHubs("460dc92d-8af4-4260-8780-45758fa688f0");
         assertNotNull(playerHubs, "Player hubs should not be null");
     }
+
+    @Test
+    public void testGetPlayerTeams() {
+        PlayerTeams playerTeams = jaceit.players().getPlayerTeams("460dc92d-8af4-4260-8780-45758fa688f0");
+        assertNotNull(playerTeams, "Player teams should not be null");
+    }
+
+    @Test
+    public void testGetPlayerTeamsWithParams() {
+        PlayerTeams playerTeams = jaceit.players().getPlayerTeams("460dc92d-8af4-4260-8780-45758fa688f0", QueryParameters.of("limit", "5"));
+        assertNotNull(playerTeams, "Player teams should not be null");
+    }
+
+    @Test
+    public void testGetPlayerTournaments() {
+        PlayerTournaments playerTournaments = jaceit.players().getPlayerTournaments("460dc92d-8af4-4260-8780-45758fa688f0");
+        assertNotNull(playerTournaments, "Player tournaments should not be null");
+    }
+
+    @Test
+    public void testGetPlayerTournamentsWithParams() {
+        PlayerTournaments playerTournaments = jaceit.players().getPlayerTournaments("460dc92d-8af4-4260-8780-45758fa688f0", QueryParameters.of("limit", "5"));
+        assertNotNull(playerTournaments, "Player tournaments should not be null");
+    }
+
+    @Test
+    public void testGetPlayerStats() {
+        PlayerStats playerStats = jaceit.players().getPlayerStats("460dc92d-8af4-4260-8780-45758fa688f0", "cs2");
+        assertNotNull(playerStats, "Player stats should not be null");
+        assertNotNull(playerStats.getLifetime(), "Lifetime stats should not be null");
+    }
 }

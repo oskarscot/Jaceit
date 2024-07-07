@@ -31,7 +31,7 @@ public class Main {
 - [x] Replace all logging with SLF4J
 - [ ] Implement all endpoints
 - [ ] Complete documentation
-- [ ] Redesign the ApiClient class
+- [x] Redesign the ApiClient class
 
 ## Future Plans
 

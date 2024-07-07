@@ -228,4 +228,65 @@ public class PlayersImpl implements Players {
 
         return fetchSync(url, PlayerHubs.class);
     }
+
+    @Override
+    public PlayerTeams getPlayerTeams(String playerId) {
+        return fetchSync(FACEIT_DATA_API + "players/" + playerId + "/teams", PlayerTeams.class);
+    }
+
+    @Override
+    public PlayerTeams getPlayerTeams(String playerId, QueryParameters parameters) {
+        String url = FACEIT_DATA_API + "players/" + playerId + "/teams?" + parameters;
+
+        Map<String, List<ParameterCheck>> checks = Map.of(
+                "offset", List.of(
+                        new ParametersContainValueCheck("limit"),
+                        new IntegerCheck(),
+                        new OffsetDivisibleByLimitCheck(),
+                        new NonNegativeCheck()
+                ),
+                "limit", List.of(
+                        new IntegerCheck(),
+                        new NonNegativeCheck(),
+                        new LimitCheck(50)
+                )
+        );
+
+        validateUrl(url, checks);
+
+        return fetchSync(url, PlayerTeams.class);
+    }
+
+    @Override
+    public PlayerTournaments getPlayerTournaments(String playerId) {
+        return fetchSync(FACEIT_DATA_API + "players/" + playerId + "/tournaments", PlayerTournaments.class);
+    }
+
+    @Override
+    public PlayerTournaments getPlayerTournaments(String playerId, QueryParameters parameters) {
+        String url = FACEIT_DATA_API + "players/" + playerId + "/tournaments?" + parameters;
+
+        Map<String, List<ParameterCheck>> checks = Map.of(
+                "offset", List.of(
+                        new ParametersContainValueCheck("limit"),
+                        new IntegerCheck(),
+                        new OffsetDivisibleByLimitCheck(),
+                        new NonNegativeCheck()
+                ),
+                "limit", List.of(
+                        new IntegerCheck(),
+                        new NonNegativeCheck(),
+                        new LimitCheck(50)
+                )
+        );
+
+        validateUrl(url, checks);
+
+        return fetchSync(url, PlayerTournaments.class);
+    }
+
+    @Override
+    public PlayerStats getPlayerStats(String playerId, String game) {
+        return fetchSync(FACEIT_DATA_API + "players/" + playerId + "/stats/" + game, PlayerStats.class);
+    }
 }

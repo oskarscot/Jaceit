@@ -183,4 +183,52 @@ public interface Players {
      * @throws DataFetchException if the request fails
      */
     PlayerHubs getPlayerHubs(String playerId, QueryParameters parameters);
+
+    /**
+     * Retrieves player teams for the specified player ID.
+     *
+     * @param playerId the FACEIT player ID
+     * @return a {@link PlayerTeams} object containing the player's teams, or null if the player does not exist
+     * @throws DataFetchException if the request fails
+     */
+    PlayerTeams getPlayerTeams(String playerId);
+
+    /**
+     * Retrieves player teams for the specified player ID with query parameters.
+     *
+     * @param playerId   the FACEIT player ID
+     * @param parameters the query parameters to be used in the request
+     * @return a {@link PlayerTeams} object containing the player's teams, or null if the player does not exist
+     * @throws DataFetchException if the request fails
+     */
+    PlayerTeams getPlayerTeams(String playerId, QueryParameters parameters);
+
+    /**
+     * Retrieves player tournaments for the specified player ID.
+     *
+     * @param playerId the FACEIT player ID
+     * @return a {@link PlayerTournaments} object containing the player's tournaments, or null if the player does not exist
+     * @throws DataFetchException if the request fails
+     */
+    PlayerTournaments getPlayerTournaments(String playerId);
+
+    /**
+     * Retrieves player tournaments for the specified player ID with query parameters.
+     *
+     * @param playerId   the FACEIT player ID
+     * @param parameters the query parameters to be used in the request
+     * @return a {@link PlayerTournaments} object containing the player's tournaments, or null if the player does not exist
+     * @throws DataFetchException if the request fails
+     */
+    PlayerTournaments getPlayerTournaments(String playerId, QueryParameters parameters);
+
+    /**
+     * Retrieves player stats for the specified player ID and game.
+     *
+     * @param playerId the FACEIT player ID
+     * @param game     the FACEIT game
+     * @return a {@link PlayerStats} object containing the player's stats, or null if the player does not exist
+     * @throws DataFetchException if the request fails
+     */
+    PlayerStats getPlayerStats(String playerId, String game);
 }
