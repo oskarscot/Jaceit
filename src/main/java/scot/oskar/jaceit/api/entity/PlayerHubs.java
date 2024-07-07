@@ -1,72 +1,26 @@
 package scot.oskar.jaceit.api.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import scot.oskar.jaceit.internal.entity.PlayerHubsImpl;
 
 import java.util.List;
 
-public class PlayerHubs {
+@JsonDeserialize(as = PlayerHubsImpl.class)
+public interface PlayerHubs {
 
-    @JsonProperty("items")
-    private List<Hub> hubs;
+    List<Hub> getHubs();
 
-    // Offset must be a multiple of limit, limit has to be specified if offset is specified
-    @JsonProperty("start")
-    private int offset;
+    int getLimit();
 
-    @JsonProperty("end")
-    private int limit;
+    int getOffset();
 
-    public static class Hub {
-
-        @JsonProperty("hub_id")
-        private String hubId;
-
-        private String name;
-        private String avatar;
-
-        @JsonProperty("game_id")
-        private String gameId;
-
-        @JsonProperty("organizer_id")
-        private String organizerId;
-
-        @JsonProperty("faceit_url")
-        private String faceitUrl;
-
-        public String getAvatar() {
-            return avatar;
-        }
-
-        public String getFaceitUrl() {
-            return faceitUrl;
-        }
-
-        public String getGameId() {
-            return gameId;
-        }
-
-        public String getHubId() {
-            return hubId;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public String getOrganizerId() {
-            return organizerId;
-        }
-    }
-
-    public List<Hub> getHubs() {
-        return hubs;
-    }
-
-    public int getLimit() {
-        return limit;
-    }
-
-    public int getOffset() {
-        return offset;
+    @JsonDeserialize(as = PlayerHubsImpl.HubImpl.class)
+    interface Hub {
+        String getAvatar();
+        String getFaceitUrl();
+        String getGameId();
+        String getHubId();
+        String getName();
+        String getOrganizerId();
     }
 }

@@ -1,420 +1,126 @@
 package scot.oskar.jaceit.api.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import scot.oskar.jaceit.internal.entity.PlayerResultsImpl;
+
 import java.util.List;
 
-public class PlayerResults {
+@JsonDeserialize(as = PlayerResultsImpl.class)
+public interface PlayerResults {
 
-    @JsonProperty("items")
-    private List<Item> items;
+    List<Stats> getStats();
 
-    // Offset must be a multiple of limit, limit has to be specified if offset is specified
-    @JsonProperty("start")
-    private int offset;
+    int getOffset();
+    int getLimit();
 
-    @JsonProperty("end")
-    private int limit;
+    @JsonDeserialize(as = PlayerResultsImpl.StatsImpl.class)
+    interface Stats {
+        String getGameMode();
 
-    public List<Item> getItems() {
-        return items;
-    }
+        String getFlashSuccesses();
 
-    public int getOffset() {
-        return offset;
-    }
+        String getMatchId();
 
-    public int getLimit() {
-        return limit;
-    }
+        String getZeusKills();
 
-    public static class Item {
+        String getNickname();
 
-        @JsonProperty("stats")
-        private Stats stats;
+        String getOvertimeScore();
 
-        public Stats getStats() {
-            return stats;
-        }
-    }
+        String getSecondHalfScore();
 
-    public static class Stats {
+        String getPentaKills();
 
-        @JsonProperty("Game Mode")
-        private String gameMode;
+        String getHeadshots();
 
-        @JsonProperty("Flash Successes")
-        private String flashSuccesses;
+        String getMatchRound();
 
-        @JsonProperty("Match Id")
-        private String matchId;
+        String getFinalScore();
 
-        @JsonProperty("Zeus Kills")
-        private String zeusKills;
+        String getRounds();
 
-        @JsonProperty("Nickname")
-        private String nickname;
+        String getPlayerId();
 
-        @JsonProperty("Overtime score")
-        private String overtimeScore;
+        String getClutchKills();
 
-        @JsonProperty("Second Half Score")
-        private String secondHalfScore;
+        String getOneVoneWins();
 
-        @JsonProperty("Penta Kills")
-        private String pentaKills;
+        String getPistolKills();
 
-        @JsonProperty("Headshots")
-        private String headshots;
+        String getKnifeKills();
 
-        @JsonProperty("Match Round")
-        private String matchRound;
+        String getDoubleKills();
 
-        @JsonProperty("Final Score")
-        private String finalScore;
+        String getGame();
 
-        @JsonProperty("Rounds")
-        private String rounds;
+        String getFirstHalfScore();
 
-        @JsonProperty("Player Id")
-        private String playerId;
+        String getResult();
 
-        @JsonProperty("Clutch Kills")
-        private String clutchKills;
+        String getUtilityDamage();
 
-        @JsonProperty("1v1Wins")
-        private String oneVoneWins;
+        String getScore();
 
-        @JsonProperty("Pistol Kills")
-        private String pistolKills;
+        String getOneVtwoCount();
 
-        @JsonProperty("Knife Kills")
-        private String knifeKills;
+        String getKdRatio();
 
-        @JsonProperty("Double Kills")
-        private String doubleKills;
+        String getOneVtwoWins();
 
-        @JsonProperty("Game")
-        private String game;
+        String getHeadshotsPercentage();
 
-        @JsonProperty("First Half Score")
-        private String firstHalfScore;
+        String getAssists();
 
-        @JsonProperty("Result")
-        private String result;
+        String getTripleKills();
 
-        @JsonProperty("Utility Damage")
-        private String utilityDamage;
+        String getKrRatio();
 
-        @JsonProperty("Score")
-        private String score;
+        String getUpdatedAt();
 
-        @JsonProperty("1v2Count")
-        private String oneVtwoCount;
+        String getEnemiesFlashed();
 
-        @JsonProperty("K/D Ratio")
-        private String kdRatio;
+        String getDeaths();
 
-        @JsonProperty("1v2Wins")
-        private String oneVtwoWins;
+        String getUtilityCount();
 
-        @JsonProperty("Headshots %")
-        private String headshotsPercentage;
+        String getWinner();
 
-        @JsonProperty("Assists")
-        private String assists;
+        String getFirstKills();
 
-        @JsonProperty("Triple Kills")
-        private String tripleKills;
+        String getBestOf();
 
-        @JsonProperty("K/R Ratio")
-        private String krRatio;
+        String getDamage();
 
-        @JsonProperty("Updated At")
-        private String updatedAt;
+        String getTeam();
 
-        @JsonProperty("Enemies Flashed")
-        private String enemiesFlashed;
+        String getQuadroKills();
 
-        @JsonProperty("Deaths")
-        private String deaths;
+        String getEntryWins();
 
-        @JsonProperty("Utility Count")
-        private String utilityCount;
+        String getKills();
 
-        @JsonProperty("Winner")
-        private String winner;
+        String getMvps();
 
-        @JsonProperty("First Kills")
-        private String firstKills;
+        String getUtilityEnemies();
 
-        @JsonProperty("Best Of")
-        private String bestOf;
+        String getEntryCount();
 
-        @JsonProperty("Damage")
-        private String damage;
+        String getFlashCount();
 
-        @JsonProperty("Team")
-        private String team;
+        String getRegion();
 
-        @JsonProperty("Quadro Kills")
-        private String quadroKills;
+        String getUtilitySuccesses();
 
-        @JsonProperty("Entry Wins")
-        private String entryWins;
+        String getCreatedAt();
 
-        @JsonProperty("Kills")
-        private String kills;
+        String getMap();
 
-        @JsonProperty("MVPs")
-        private String mvps;
+        String getADR();
 
-        @JsonProperty("Utility Enemies")
-        private String utilityEnemies;
+        String getCompetitionId();
 
-        @JsonProperty("Entry Count")
-        private String entryCount;
+        String getSniperKills();
 
-        @JsonProperty("Flash Count")
-        private String flashCount;
-
-        @JsonProperty("Region")
-        private String region;
-
-        @JsonProperty("Utility Successes")
-        private String utilitySuccesses;
-
-        @JsonProperty("Created At")
-        private String createdAt;
-
-        @JsonProperty("Map")
-        private String map;
-
-        @JsonProperty("ADR")
-        private String adr;
-
-        @JsonProperty("Competition Id")
-        private String competitionId;
-
-        @JsonProperty("Sniper Kills")
-        private String sniperKills;
-
-        @JsonProperty("1v1Count")
-        private String oneVoneCount;
-
-        public String getGameMode() {
-            return gameMode;
-        }
-
-        public String getFlashSuccesses() {
-            return flashSuccesses;
-        }
-
-        public String getMatchId() {
-            return matchId;
-        }
-
-        public String getZeusKills() {
-            return zeusKills;
-        }
-
-        public String getNickname() {
-            return nickname;
-        }
-
-        public String getOvertimeScore() {
-            return overtimeScore;
-        }
-
-        public String getSecondHalfScore() {
-            return secondHalfScore;
-        }
-
-        public String getPentaKills() {
-            return pentaKills;
-        }
-
-        public String getHeadshots() {
-            return headshots;
-        }
-
-        public String getMatchRound() {
-            return matchRound;
-        }
-
-        public String getFinalScore() {
-            return finalScore;
-        }
-
-        public String getRounds() {
-            return rounds;
-        }
-
-        public String getPlayerId() {
-            return playerId;
-        }
-
-        public String getClutchKills() {
-            return clutchKills;
-        }
-
-        public String getOneVoneWins() {
-            return oneVoneWins;
-        }
-
-        public String getPistolKills() {
-            return pistolKills;
-        }
-
-        public String getKnifeKills() {
-            return knifeKills;
-        }
-
-        public String getDoubleKills() {
-            return doubleKills;
-        }
-
-        public String getGame() {
-            return game;
-        }
-
-        public String getFirstHalfScore() {
-            return firstHalfScore;
-        }
-
-        public String getResult() {
-            return result;
-        }
-
-        public String getUtilityDamage() {
-            return utilityDamage;
-        }
-
-        public String getScore() {
-            return score;
-        }
-
-        public String getOneVtwoCount() {
-            return oneVtwoCount;
-        }
-
-        public String getKdRatio() {
-            return kdRatio;
-        }
-
-        public String getOneVtwoWins() {
-            return oneVtwoWins;
-        }
-
-        public String getHeadshotsPercentage() {
-            return headshotsPercentage;
-        }
-
-        public String getAssists() {
-            return assists;
-        }
-
-        public String getTripleKills() {
-            return tripleKills;
-        }
-
-        public String getKrRatio() {
-            return krRatio;
-        }
-
-        public String getUpdatedAt() {
-            return updatedAt;
-        }
-
-        public String getEnemiesFlashed() {
-            return enemiesFlashed;
-        }
-
-        public String getDeaths() {
-            return deaths;
-        }
-
-        public String getUtilityCount() {
-            return utilityCount;
-        }
-
-        public String getWinner() {
-            return winner;
-        }
-
-        public String getFirstKills() {
-            return firstKills;
-        }
-
-        public String getBestOf() {
-            return bestOf;
-        }
-
-        public String getDamage() {
-            return damage;
-        }
-
-        public String getTeam() {
-            return team;
-        }
-
-        public String getQuadroKills() {
-            return quadroKills;
-        }
-
-        public String getEntryWins() {
-            return entryWins;
-        }
-
-        public String getKills() {
-            return kills;
-        }
-
-        public String getMvps() {
-            return mvps;
-        }
-
-        public String getUtilityEnemies() {
-            return utilityEnemies;
-        }
-
-        public String getEntryCount() {
-            return entryCount;
-        }
-
-        public String getFlashCount() {
-            return flashCount;
-        }
-
-        public String getRegion() {
-            return region;
-        }
-
-        public String getUtilitySuccesses() {
-            return utilitySuccesses;
-        }
-
-        public String getCreatedAt() {
-            return createdAt;
-        }
-
-        public String getMap() {
-            return map;
-        }
-
-        public String getAdr() {
-            return adr;
-        }
-
-        public String getCompetitionId() {
-            return competitionId;
-        }
-
-        public String getSniperKills() {
-            return sniperKills;
-        }
-
-        public String getOneVoneCount() {
-            return oneVoneCount;
-        }
+        String getOneVoneCount();
     }
 }

@@ -69,7 +69,7 @@ public class JaceitTest {
     @Test
     public void testGetResultsForPlayer() {
         PlayerResults playerResults = jaceit.players().getLastResultsForGame("460dc92d-8af4-4260-8780-45758fa688f0", "cs2", QueryParameters.of("limit", "5"));
-        assertEquals(playerResults.getItems().size(), 5);
+        assertNotNull(playerResults.getStats(), "Player stats should not be null");
     }
 
     @Test

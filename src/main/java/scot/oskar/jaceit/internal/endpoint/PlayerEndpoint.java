@@ -8,7 +8,7 @@ import scot.oskar.jaceit.api.request.ApiCallback;
 import scot.oskar.jaceit.api.request.ApiClient;
 import scot.oskar.jaceit.api.request.QueryParameters;
 import scot.oskar.jaceit.internal.web.QueryValidator;
-import scot.oskar.jaceit.internal.web.check.*;
+import scot.oskar.jaceit.internal.web.check.impl.*;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;

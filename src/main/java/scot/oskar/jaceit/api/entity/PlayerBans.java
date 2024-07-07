@@ -1,69 +1,36 @@
 package scot.oskar.jaceit.api.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import scot.oskar.jaceit.internal.entity.PlayerBansImpl;
+
 import java.util.List;
 
-public class PlayerBans {
+@JsonDeserialize(as = PlayerBansImpl.class)
+public interface PlayerBans {
 
-    public int end;
-    public List<Ban> items;
-    public int start;
+    List<Ban> getBans();
 
-    public static class Ban {
+    int getEnd();
 
-        @JsonProperty("ends_at")
-        public String endsAt;
+    int getStart();
 
-        public String game;
-        public String nickname;
-        public String reason;
+    @JsonDeserialize(as = PlayerBansImpl.BanImpl.class)
+    interface Ban {
 
-        @JsonProperty("starts_at")
-        public String startsAt;
+        String getEndsAt();
 
-        public String type;
+        String getGame();
 
-        @JsonProperty("user_id")
-        public String userId;
+        String getNickname();
 
-        public String getEndsAt() {
-            return endsAt;
-        }
+        String getReason();
 
-        public String getGame() {
-            return game;
-        }
+        String getStartsAt();
 
-        public String getNickname() {
-            return nickname;
-        }
+        String getType();
 
-        public String getReason() {
-            return reason;
-        }
+        String getUserId();
 
-        public String getStartsAt() {
-            return startsAt;
-        }
-
-        public String getType() {
-            return type;
-        }
-
-        public String getUserId() {
-            return userId;
-        }
     }
 
-    public int getEnd() {
-        return end;
-    }
-
-    public List<Ban> getBans() {
-        return items;
-    }
-
-    public int getStart() {
-        return start;
-    }
 }

@@ -1,268 +1,89 @@
 package scot.oskar.jaceit.api.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import scot.oskar.jaceit.internal.entity.PlayerMatchHistoryImpl;
+
 import java.util.List;
 import java.util.Map;
 
-public class PlayerMatchHistory {
+@JsonDeserialize(as = PlayerMatchHistoryImpl.class)
+public interface PlayerMatchHistory {
 
-    public List<Match> items;
+    List<Match> getMatches();
 
-    // Offset must be a multiple of limit, limit has to be specified if offset is specified
-    @JsonProperty("start")
-    private int offset;
+    int getOffset();
 
-    @JsonProperty("end")
-    private int limit;
+    int getLimit();
 
-    private int from;
-    private int to;
+    int getFrom();
 
-    public static class Match {
-        @JsonProperty("match_id")
-        private String matchId;
+    int getTo();
 
-        @JsonProperty("game_id")
-        private String gameId;
+    @JsonDeserialize(as = PlayerMatchHistoryImpl.MatchImpl.class)
+    interface Match {
+        String getMatchId();
+        String getGameId();
 
-        private String region;
+        String getRegion();
 
-        @JsonProperty("match_type")
-        private String matchType;
+        String getMatchType();
 
-        @JsonProperty("game_mode")
-        private String gameMode;
+        String getGameMode();
 
-        @JsonProperty("max_players")
-        private int maxPlayers;
+        int getMaxPlayers();
 
-        @JsonProperty("teams_size")
-        private int teamsSize;
+        int getTeamsSize();
+        Map<String, Team> getTeams();
 
-        private Map<String, Team> teams;
+        List<String> getPlayingPlayers();
 
-        @JsonProperty("playing_players")
-        private List<String> playingPlayers;
+        String getCompetitionId();
 
-        @JsonProperty("competition_id")
-        private String competitionId;
+        String getCompetitionName();
 
-        @JsonProperty("competition_name")
-        private String competitionName;
+        String getCompetitionType();
 
-        @JsonProperty("competition_type")
-        private String competitionType;
+        String getOrganizerId();
+        String getStatus();
+        long getStartedAt();
 
-        @JsonProperty("organizer_id")
-        private String organizerId;
+        long getFinishedAt();
 
-        private String status;
+        Results getResults();
 
-        @JsonProperty("started_at")
-        private long startedAt;
+        String getFaceitUrl();
 
-        @JsonProperty("finished_at")
-        private long finishedAt;
+        @JsonDeserialize(as = PlayerMatchHistoryImpl.MatchImpl.ResultsImpl.class)
+        interface Results {
+            String getWinner();
+            Score getScore();
 
-        private Results results;
-
-        @JsonProperty("faceit_url")
-        private String faceitUrl;
-
-        public String getMatchId() {
-            return matchId;
-        }
-
-        public String getGameId() {
-            return gameId;
-        }
-
-        public String getRegion() {
-            return region;
-        }
-
-        public String getMatchType() {
-            return matchType;
-        }
-
-        public String getGameMode() {
-            return gameMode;
-        }
-
-        public int getMaxPlayers() {
-            return maxPlayers;
-        }
-
-        public int getTeamsSize() {
-            return teamsSize;
-        }
-
-        public Map<String, Team> getTeams() {
-            return teams;
-        }
-
-        public List<String> getPlayingPlayers() {
-            return playingPlayers;
-        }
-
-        public String getCompetitionId() {
-            return competitionId;
-        }
-
-        public String getCompetitionName() {
-            return competitionName;
-        }
-
-        public String getCompetitionType() {
-            return competitionType;
-        }
-
-        public String getOrganizerId() {
-            return organizerId;
-        }
-
-        public String getStatus() {
-            return status;
-        }
-
-        public long getStartedAt() {
-            return startedAt;
-        }
-
-        public long getFinishedAt() {
-            return finishedAt;
-        }
-
-        public Results getResults() {
-            return results;
-        }
-
-        public String getFaceitUrl() {
-            return faceitUrl;
-        }
-
-        public static class Team {
-            @JsonProperty("team_id")
-            private String teamId;
-
-            private String nickname;
-            private String avatar;
-            private String type;
-            private List<Player> players;
-
-            public String getTeamId() {
-                return teamId;
-            }
-
-            public String getNickname() {
-                return nickname;
-            }
-
-            public String getAvatar() {
-                return avatar;
-            }
-
-            public String getType() {
-                return type;
-            }
-
-            public List<Player> getPlayers() {
-                return players;
+            @JsonDeserialize(as = PlayerMatchHistoryImpl.MatchImpl.ResultsImpl.ScoreImpl.class)
+            interface Score {
+                int getFaction1();
+                int getFaction2();
             }
         }
 
-        public static class Player {
-            @JsonProperty("player_id")
-            private String playerId;
-
-            private String nickname;
-            private String avatar;
-
-            @JsonProperty("skill_level")
-            private int skillLevel;
-
-            @JsonProperty("game_player_id")
-            private String gamePlayerId;
-
-            @JsonProperty("game_player_name")
-            private String gamePlayerName;
-
-            @JsonProperty("faceit_url")
-            private String faceitUrl;
-
-            public String getPlayerId() {
-                return playerId;
-            }
-
-            public String getNickname() {
-                return nickname;
-            }
-
-            public String getAvatar() {
-                return avatar;
-            }
-
-            public int getSkillLevel() {
-                return skillLevel;
-            }
-
-            public String getGamePlayerId() {
-                return gamePlayerId;
-            }
-
-            public String getGamePlayerName() {
-                return gamePlayerName;
-            }
-
-            public String getFaceitUrl() {
-                return faceitUrl;
-            }
+        @JsonDeserialize(as = PlayerMatchHistoryImpl.MatchImpl.TeamImpl.class)
+        interface Team {
+            String getTeamId();
+            String getNickname();
+            String getAvatar();
+            String getType();
+            List<Player> getPlayers();
         }
 
-        public static class Results {
-            private String winner;
-            private Score score;
-
-            public String getWinner() {
-                return winner;
-            }
-
-            public Score getScore() {
-                return score;
-            }
-
-            public static class Score {
-                private int faction1;
-                private int faction2;
-
-                public int getFaction1() {
-                    return faction1;
-                }
-
-                public int getFaction2() {
-                    return faction2;
-                }
-            }
+        @JsonDeserialize(as = PlayerMatchHistoryImpl.MatchImpl.PlayerImpl.class)
+        interface Player {
+            String getPlayerId();
+            String getNickname();
+            String getAvatar();
+            int getSkillLevel();
+            String getGamePlayerId();
+            String getGamePlayerName();
+            String getFaceitUrl();
         }
     }
 
-    public List<Match> getMatches() {
-        return items;
-    }
-
-    public int getOffset() {
-        return offset;
-    }
-
-    public int getLimit() {
-        return limit;
-    }
-
-    public int getFrom() {
-        return from;
-    }
-
-    public int getTo() {
-        return to;
-    }
 }

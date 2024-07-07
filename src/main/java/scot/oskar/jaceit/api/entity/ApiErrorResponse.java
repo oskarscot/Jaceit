@@ -1,54 +1,25 @@
 package scot.oskar.jaceit.api.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import scot.oskar.jaceit.internal.entity.ApiErrorResponseImpl;
 
 import java.util.List;
 
-/**
- * Represents an error response from the Faceit API.
- */
-public class ApiErrorResponse {
+@JsonDeserialize(as = ApiErrorResponseImpl.class)
+public interface ApiErrorResponse {
 
-    @JsonProperty("errors")
-    private List<ErrorDetail> errors;
+    List<ErrorDetail> getErrors();
 
-    public List<ErrorDetail> getErrors() {
-        return errors;
-    }
+    @JsonDeserialize(as = ApiErrorResponseImpl.ErrorDetailImpl.class)
+    interface ErrorDetail {
 
-    public static class ErrorDetail {
+        String getMessage();
 
-        @JsonProperty("message")
-        private String message;
+        String getCode();
 
-        @JsonProperty("code")
-        private String code;
+        int getHttpStatus();
 
-        @JsonProperty("http_status")
-        private int httpStatus;
+        List<String> getParameters();
 
-        @JsonProperty("parameters")
-        private List<String> parameters;
-
-        public String getMessage() {
-            return message;
-        }
-
-        public String getCode() {
-            return code;
-        }
-
-        public int getHttpStatus() {
-            return httpStatus;
-        }
-
-        public List<String> getParameters() {
-            return parameters;
-        }
-
-        @Override
-        public String toString() {
-            return this.getMessage();
-        }
     }
 }

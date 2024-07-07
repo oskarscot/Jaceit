@@ -1,4 +1,6 @@
-package scot.oskar.jaceit.internal.web.check;
+package scot.oskar.jaceit.internal.web.check.impl;
+
+import scot.oskar.jaceit.internal.web.check.ParameterCheck;
 
 import java.util.Map;
 
