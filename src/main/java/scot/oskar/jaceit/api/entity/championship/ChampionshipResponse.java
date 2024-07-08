@@ -136,6 +136,7 @@ public interface ChampionshipResponse {
             }
         }
 
+        @JsonDeserialize(as = ChampionshipResponseImpl.ChampionshipImpl.JoinChecksImpl.class)
         interface JoinChecks {
 
             List<String> getAllowedTeamTypes();
@@ -155,6 +156,7 @@ public interface ChampionshipResponse {
             int getWhitelistGeoCountriesMinPlayers();
         }
 
+        @JsonDeserialize(as = ChampionshipResponseImpl.ChampionshipImpl.OrganizerDataImpl.class)
         interface OrganizerData {
 
             String getAvatar();
@@ -186,6 +188,7 @@ public interface ChampionshipResponse {
             String getYoutube();
         }
 
+        @JsonDeserialize(as = ChampionshipResponseImpl.ChampionshipImpl.PrizeImpl.class)
         interface Prize {
 
             int getFaceitPoints();
@@ -193,6 +196,7 @@ public interface ChampionshipResponse {
             int getRank();
         }
 
+        @JsonDeserialize(as = ChampionshipResponseImpl.ChampionshipImpl.ScheduleImpl.class)
         interface Schedule {
 
             Map<String, MatchSchedule> getSchedule();
@@ -205,6 +209,7 @@ public interface ChampionshipResponse {
             }
         }
 
+        @JsonDeserialize(as = ChampionshipResponseImpl.ChampionshipImpl.ScreeningImpl.class)
         interface Screening {
 
             boolean isEnabled();
@@ -212,6 +217,7 @@ public interface ChampionshipResponse {
             String getId();
         }
 
+        @JsonDeserialize(as = ChampionshipResponseImpl.ChampionshipImpl.StreamImpl.class)
         interface Stream {
 
             boolean isActive();
@@ -223,6 +229,7 @@ public interface ChampionshipResponse {
             String getTitle();
         }
 
+        @JsonDeserialize(as = ChampionshipResponseImpl.ChampionshipImpl.SubstitutionConfigurationImpl.class)
         interface SubstitutionConfiguration {
 
             int getMaxSubstitutes();

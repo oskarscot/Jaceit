@@ -1,5 +1,6 @@
 package scot.oskar.jaceit.api;
 
+import scot.oskar.jaceit.api.endpoint.Championships;
 import scot.oskar.jaceit.api.endpoint.Matches;
 import scot.oskar.jaceit.api.endpoint.Players;
 import scot.oskar.jaceit.api.request.ApiClient;
@@ -21,4 +22,6 @@ public interface Jaceit {
     Players players();
 
     Matches matches();
+
+    Championships championships();
 }
