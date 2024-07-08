@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import scot.oskar.jaceit.api.endpoint.Matches;
 import scot.oskar.jaceit.api.entity.match.MatchDetails;
+import scot.oskar.jaceit.api.entity.match.MatchStats;
 import scot.oskar.jaceit.api.exception.ApiException;
 import scot.oskar.jaceit.api.exception.DataFetchException;
 import scot.oskar.jaceit.api.request.ApiCallback;
@@ -51,4 +52,16 @@ public class MatchesImpl implements Matches {
     public MatchDetails getMatchDetails(String matchId) {
         return fetchSync(FACEIT_DATA_API + "matches/" + matchId, MatchDetails.class);
     }
+
+    @Override
+    public CompletableFuture<MatchDetails> getMatchDetailsAsync(String matchId) {
+        return fetchAsync(FACEIT_DATA_API + "matches/" + matchId, MatchDetails.class);
+    }
+
+    @Override
+    public MatchStats getMatchStats(String matchId) {
+        return fetchSync(FACEIT_DATA_API + "matches/" + matchId + "/stats", MatchStats.class);
+    }
+
+
 }
