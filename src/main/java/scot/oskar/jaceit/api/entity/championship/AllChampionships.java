@@ -1,13 +1,13 @@
 package scot.oskar.jaceit.api.entity.championship;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import scot.oskar.jaceit.internal.entity.championship.ChampionshipResponseImpl;
+import scot.oskar.jaceit.internal.entity.championship.AllChampionshipsImpl;
 
 import java.util.List;
 import java.util.Map;
 
-@JsonDeserialize(as = ChampionshipResponseImpl.class)
-public interface ChampionshipResponse {
+@JsonDeserialize(as = AllChampionshipsImpl.class)
+public interface AllChampionships {
 
     long getEnd();
 
@@ -15,7 +15,7 @@ public interface ChampionshipResponse {
 
     long getStart();
 
-    @JsonDeserialize(as = ChampionshipResponseImpl.ChampionshipImpl.class)
+    @JsonDeserialize(as = AllChampionshipsImpl.ChampionshipImpl.class)
     interface Championship {
 
         boolean isAnticheatRequired();
@@ -94,7 +94,7 @@ public interface ChampionshipResponse {
 
         String getType();
 
-        @JsonDeserialize(as = ChampionshipResponseImpl.ChampionshipImpl.GameDataImpl.class)
+        @JsonDeserialize(as = AllChampionshipsImpl.ChampionshipImpl.GameDataImpl.class)
         interface GameData {
 
             Assets getAssets();
@@ -113,7 +113,7 @@ public interface ChampionshipResponse {
 
             String getShortLabel();
 
-            @JsonDeserialize(as = ChampionshipResponseImpl.ChampionshipImpl.GameDataImpl.AssetsImpl.class)
+            @JsonDeserialize(as = AllChampionshipsImpl.ChampionshipImpl.GameDataImpl.AssetsImpl.class)
             interface Assets {
 
                 String getCover();
@@ -136,7 +136,7 @@ public interface ChampionshipResponse {
             }
         }
 
-        @JsonDeserialize(as = ChampionshipResponseImpl.ChampionshipImpl.JoinChecksImpl.class)
+        @JsonDeserialize(as = AllChampionshipsImpl.ChampionshipImpl.JoinChecksImpl.class)
         interface JoinChecks {
 
             List<String> getAllowedTeamTypes();
@@ -156,7 +156,7 @@ public interface ChampionshipResponse {
             int getWhitelistGeoCountriesMinPlayers();
         }
 
-        @JsonDeserialize(as = ChampionshipResponseImpl.ChampionshipImpl.OrganizerDataImpl.class)
+        @JsonDeserialize(as = AllChampionshipsImpl.ChampionshipImpl.OrganizerDataImpl.class)
         interface OrganizerData {
 
             String getAvatar();
@@ -188,7 +188,7 @@ public interface ChampionshipResponse {
             String getYoutube();
         }
 
-        @JsonDeserialize(as = ChampionshipResponseImpl.ChampionshipImpl.PrizeImpl.class)
+        @JsonDeserialize(as = AllChampionshipsImpl.ChampionshipImpl.PrizeImpl.class)
         interface Prize {
 
             int getFaceitPoints();
@@ -196,7 +196,7 @@ public interface ChampionshipResponse {
             int getRank();
         }
 
-        @JsonDeserialize(as = ChampionshipResponseImpl.ChampionshipImpl.ScheduleImpl.class)
+        @JsonDeserialize(as = AllChampionshipsImpl.ChampionshipImpl.ScheduleImpl.class)
         interface Schedule {
 
             Map<String, MatchSchedule> getSchedule();
@@ -209,7 +209,7 @@ public interface ChampionshipResponse {
             }
         }
 
-        @JsonDeserialize(as = ChampionshipResponseImpl.ChampionshipImpl.ScreeningImpl.class)
+        @JsonDeserialize(as = AllChampionshipsImpl.ChampionshipImpl.ScreeningImpl.class)
         interface Screening {
 
             boolean isEnabled();
@@ -217,7 +217,7 @@ public interface ChampionshipResponse {
             String getId();
         }
 
-        @JsonDeserialize(as = ChampionshipResponseImpl.ChampionshipImpl.StreamImpl.class)
+        @JsonDeserialize(as = AllChampionshipsImpl.ChampionshipImpl.StreamImpl.class)
         interface Stream {
 
             boolean isActive();
@@ -229,7 +229,7 @@ public interface ChampionshipResponse {
             String getTitle();
         }
 
-        @JsonDeserialize(as = ChampionshipResponseImpl.ChampionshipImpl.SubstitutionConfigurationImpl.class)
+        @JsonDeserialize(as = AllChampionshipsImpl.ChampionshipImpl.SubstitutionConfigurationImpl.class)
         interface SubstitutionConfiguration {
 
             int getMaxSubstitutes();

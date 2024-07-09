@@ -2,7 +2,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import scot.oskar.jaceit.api.Jaceit;
 import scot.oskar.jaceit.api.JaceitBuilder;
-import scot.oskar.jaceit.api.entity.championship.ChampionshipResponse;
+import scot.oskar.jaceit.api.entity.championship.AllChampionships;
 import scot.oskar.jaceit.api.entity.championship.ChampionshipType;
 import scot.oskar.jaceit.api.request.QueryParameters;
 
@@ -22,19 +22,19 @@ public class ChampionshipTest {
 
     @Test
     public void testGetChampionships() {
-        ChampionshipResponse championships = jaceit.championships().getChampionships("cs2");
+        AllChampionships championships = jaceit.championships().getAll("cs2");
         assertNotNull(championships, "Championships should not be null");
     }
 
     @Test
     public void testGetChampionshipsType() {
-        ChampionshipResponse championships = jaceit.championships().getChampionships("cs2", ChampionshipType.UPCOMING);
+        AllChampionships championships = jaceit.championships().getAll("cs2", ChampionshipType.UPCOMING);
         assertNotNull(championships, "Championships should not be null");
     }
 
     @Test
     public void testGetChampionshipsTypeWithQuery() {
-        ChampionshipResponse championships = jaceit.championships().getChampionships("cs2", ChampionshipType.UPCOMING, QueryParameters.of("limit", "1"));
+        AllChampionships championships = jaceit.championships().getAll("cs2", ChampionshipType.UPCOMING, QueryParameters.of("limit", "1"));
         assertEquals(championships.getItems().size(), 1);
     }
 

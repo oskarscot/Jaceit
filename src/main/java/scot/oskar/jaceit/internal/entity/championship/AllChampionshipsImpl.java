@@ -2,13 +2,13 @@ package scot.oskar.jaceit.internal.entity.championship;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import scot.oskar.jaceit.api.entity.championship.ChampionshipResponse;
+import scot.oskar.jaceit.api.entity.championship.AllChampionships;
 
 import java.util.List;
 import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ChampionshipResponseImpl implements ChampionshipResponse {
+public class AllChampionshipsImpl implements AllChampionships {
 
     @JsonProperty("end")
     private long end;
