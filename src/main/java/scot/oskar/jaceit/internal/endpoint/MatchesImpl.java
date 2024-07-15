@@ -34,5 +34,10 @@ public class MatchesImpl implements Matches {
         return fetchSync(apiClient, FACEIT_DATA_API + "matches/" + matchId + "/stats", MatchStats.class);
     }
 
+    @Override
+    public CompletableFuture<MatchStats> getMatchStatsAsync(String matchId) {
+        return fetchAsync(apiClient, FACEIT_DATA_API + "matches/" + matchId + "/stats", MatchStats.class);
+    }
+
 
 }

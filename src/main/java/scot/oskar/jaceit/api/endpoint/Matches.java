@@ -12,4 +12,6 @@ public interface Matches {
 
     MatchStats getMatchStats(String matchId);
 
+    CompletableFuture<MatchStats> getMatchStatsAsync(String matchId);
+
 }
