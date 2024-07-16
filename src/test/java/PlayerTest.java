@@ -26,19 +26,19 @@ public class PlayerTest {
     @Test
     public void testGetPlayerById() {
         PlayerProfile playerById = jaceit.players().getDetailsById("460dc92d-8af4-4260-8780-45758fa688f0");
-        assertEquals(playerById.getNickname(), "ITB_nexa");
+        assertEquals(playerById.getNickname(), "tesez");
     }
 
     @Test
     public void testGetPlayerByIdAsync() {
         PlayerProfile playerById = jaceit.players().getDetailsByIdAsync("460dc92d-8af4-4260-8780-45758fa688f0").join();
-        assertEquals(playerById.getNickname(), "ITB_nexa");
+        assertEquals(playerById.getNickname(), "tesez");
     }
 
     @Test
     public void testGetPlayerByName() {
-        PlayerProfile playerByName = jaceit.players().getDetailsByNickname("ITB_nexa");
-        assertEquals(playerByName.getNickname(), "ITB_nexa");
+        PlayerProfile playerByName = jaceit.players().getDetailsByNickname("tesez");
+        assertEquals(playerByName.getNickname(), "tesez");
     }
 
     @Test
@@ -54,20 +54,20 @@ public class PlayerTest {
 
     @Test
     public void testGetPlayerByNameWithParams() {
-        PlayerProfile playerByName = jaceit.players().getDetailsByNickname("ITB_nexa", QueryParameters.of("game", "cs2"));
-        assertEquals(playerByName.getNickname(), "ITB_nexa");
+        PlayerProfile playerByName = jaceit.players().getDetailsByNickname("tesez", QueryParameters.of("game", "cs2"));
+        assertEquals(playerByName.getNickname(), "tesez");
     }
 
     @Test
     public void testGetPlayerByNameWithParamsAsync() {
-        PlayerProfile playerByName = jaceit.players().getDetailsByNicknameAsync("ITB_nexa", QueryParameters.of("game", "cs2")).join();
-        assertEquals(playerByName.getNickname(), "ITB_nexa");
+        PlayerProfile playerByName = jaceit.players().getDetailsByNicknameAsync("tesez", QueryParameters.of("game", "cs2")).join();
+        assertEquals(playerByName.getNickname(), "tesez");
     }
 
     @Test
     public void testGetPlayerByNameAsync() {
-        PlayerProfile playerByName = jaceit.players().getDetailsByNicknameAsync("ITB_nexa").join();
-        assertEquals(playerByName.getNickname(), "ITB_nexa");
+        PlayerProfile playerByName = jaceit.players().getDetailsByNicknameAsync("tesez").join();
+        assertEquals(playerByName.getNickname(), "tesez");
     }
 
     @Test
