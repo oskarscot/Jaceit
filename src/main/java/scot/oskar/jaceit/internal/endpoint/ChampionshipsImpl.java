@@ -2,7 +2,7 @@ package scot.oskar.jaceit.internal.endpoint;
 
 import org.apache.commons.lang3.Validate;
 import scot.oskar.jaceit.api.endpoint.Championships;
-import scot.oskar.jaceit.api.entity.championship.AllChampionships;
+import scot.oskar.jaceit.api.entity.championship.GameChampionship;
 import scot.oskar.jaceit.api.entity.championship.ChampionshipType;
 import scot.oskar.jaceit.api.request.ApiClient;
 import scot.oskar.jaceit.api.request.QueryParameters;
@@ -31,36 +31,36 @@ public class ChampionshipsImpl implements Championships  {
 
 
     @Override
-    public AllChampionships getAll(String game) {
+    public GameChampionship getAll(String game) {
         Validate.notNull(game, "Game cannot be null");
         Validate.notEmpty(game, "Game cannot be empty");
-        return fetchSync(apiClient, FACEIT_DATA_API + "championships?game=" + game, AllChampionships.class);
+        return fetchSync(apiClient, FACEIT_DATA_API + "championships?game=" + game, GameChampionship.class);
     }
 
     @Override
-    public CompletableFuture<AllChampionships> getAllAsync(String game) {
+    public CompletableFuture<GameChampionship> getAllAsync(String game) {
         Validate.notNull(game, "Game cannot be null");
         Validate.notEmpty(game, "Game cannot be empty");
-        return fetchAsync(apiClient, FACEIT_DATA_API + "championships?game=" + game, AllChampionships.class);
+        return fetchAsync(apiClient, FACEIT_DATA_API + "championships?game=" + game, GameChampionship.class);
     }
 
     @Override
-    public AllChampionships getAll(String game, ChampionshipType type) {
+    public GameChampionship getAll(String game, ChampionshipType type) {
         Validate.notNull(game, "Game cannot be null!");
         Validate.notNull(type, "ChampionshipType cannot be null!");
-        return fetchSync(apiClient, FACEIT_DATA_API + "championships?game=" + game + "&type=" + type.toString().toLowerCase(), AllChampionships.class);
+        return fetchSync(apiClient, FACEIT_DATA_API + "championships?game=" + game + "&type=" + type.toString().toLowerCase(), GameChampionship.class);
     }
 
     @Override
-    public CompletableFuture<AllChampionships> getAllAsync(String game, ChampionshipType type) {
+    public CompletableFuture<GameChampionship> getAllAsync(String game, ChampionshipType type) {
         Validate.notNull(game, "Game cannot be null!");
         Validate.notNull(type, "ChampionshipType cannot be null!");
         Validate.notEmpty(game, "Game cannot be empty");
-        return fetchAsync(apiClient, FACEIT_DATA_API + "championships?game=" + game + "&type=" + type.toString().toLowerCase(), AllChampionships.class);
+        return fetchAsync(apiClient, FACEIT_DATA_API + "championships?game=" + game + "&type=" + type.toString().toLowerCase(), GameChampionship.class);
     }
 
     @Override
-    public AllChampionships getAll(String game, ChampionshipType type, QueryParameters queryParameters) {
+    public GameChampionship getAll(String game, ChampionshipType type, QueryParameters queryParameters) {
         Validate.notNull(game, "Game cannot be null!");
         Validate.notEmpty(game, "Game cannot be empty");
         Validate.notNull(type, "ChampionshipType cannot be null!");
@@ -85,11 +85,11 @@ public class ChampionshipsImpl implements Championships  {
 
         validateUrl(url, checks);
 
-        return fetchSync(apiClient, url, AllChampionships.class);
+        return fetchSync(apiClient, url, GameChampionship.class);
     }
 
     @Override
-    public CompletableFuture<AllChampionships> getAllAsync(String game, ChampionshipType type, QueryParameters queryParameters) {
+    public CompletableFuture<GameChampionship> getAllAsync(String game, ChampionshipType type, QueryParameters queryParameters) {
         Validate.notNull(game, "Game cannot be null!");
         Validate.notEmpty(game, "Game cannot be empty");
         Validate.notNull(type, "ChampionshipType cannot be null!");
@@ -114,6 +114,6 @@ public class ChampionshipsImpl implements Championships  {
 
         validateUrl(url, checks);
 
-        return fetchAsync(apiClient, url, AllChampionships.class);
+        return fetchAsync(apiClient, url, GameChampionship.class);
     }
 }

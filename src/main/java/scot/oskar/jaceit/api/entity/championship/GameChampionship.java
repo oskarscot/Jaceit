@@ -1,13 +1,13 @@
 package scot.oskar.jaceit.api.entity.championship;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import scot.oskar.jaceit.internal.entity.championship.AllChampionshipsImpl;
+import scot.oskar.jaceit.internal.entity.championship.GameChampionshipImpl;
 
 import java.util.List;
 import java.util.Map;
 
-@JsonDeserialize(as = AllChampionshipsImpl.class)
-public interface AllChampionships {
+@JsonDeserialize(as = GameChampionshipImpl.class)
+public interface GameChampionship {
 
     long getEnd();
 
@@ -15,7 +15,7 @@ public interface AllChampionships {
 
     long getStart();
 
-    @JsonDeserialize(as = AllChampionshipsImpl.ChampionshipImpl.class)
+    @JsonDeserialize(as = GameChampionshipImpl.ChampionshipImpl.class)
     interface Championship {
 
         boolean isAnticheatRequired();
@@ -94,7 +94,7 @@ public interface AllChampionships {
 
         String getType();
 
-        @JsonDeserialize(as = AllChampionshipsImpl.ChampionshipImpl.GameDataImpl.class)
+        @JsonDeserialize(as = GameChampionshipImpl.ChampionshipImpl.GameDataImpl.class)
         interface GameData {
 
             Assets getAssets();
@@ -113,7 +113,7 @@ public interface AllChampionships {
 
             String getShortLabel();
 
-            @JsonDeserialize(as = AllChampionshipsImpl.ChampionshipImpl.GameDataImpl.AssetsImpl.class)
+            @JsonDeserialize(as = GameChampionshipImpl.ChampionshipImpl.GameDataImpl.AssetsImpl.class)
             interface Assets {
 
                 String getCover();
@@ -136,7 +136,7 @@ public interface AllChampionships {
             }
         }
 
-        @JsonDeserialize(as = AllChampionshipsImpl.ChampionshipImpl.JoinChecksImpl.class)
+        @JsonDeserialize(as = GameChampionshipImpl.ChampionshipImpl.JoinChecksImpl.class)
         interface JoinChecks {
 
             List<String> getAllowedTeamTypes();
@@ -156,7 +156,7 @@ public interface AllChampionships {
             int getWhitelistGeoCountriesMinPlayers();
         }
 
-        @JsonDeserialize(as = AllChampionshipsImpl.ChampionshipImpl.OrganizerDataImpl.class)
+        @JsonDeserialize(as = GameChampionshipImpl.ChampionshipImpl.OrganizerDataImpl.class)
         interface OrganizerData {
 
             String getAvatar();
@@ -188,7 +188,7 @@ public interface AllChampionships {
             String getYoutube();
         }
 
-        @JsonDeserialize(as = AllChampionshipsImpl.ChampionshipImpl.PrizeImpl.class)
+        @JsonDeserialize(as = GameChampionshipImpl.ChampionshipImpl.PrizeImpl.class)
         interface Prize {
 
             int getFaceitPoints();
@@ -196,7 +196,7 @@ public interface AllChampionships {
             int getRank();
         }
 
-        @JsonDeserialize(as = AllChampionshipsImpl.ChampionshipImpl.ScheduleImpl.class)
+        @JsonDeserialize(as = GameChampionshipImpl.ChampionshipImpl.ScheduleImpl.class)
         interface Schedule {
 
             Map<String, MatchSchedule> getSchedule();
@@ -209,7 +209,7 @@ public interface AllChampionships {
             }
         }
 
-        @JsonDeserialize(as = AllChampionshipsImpl.ChampionshipImpl.ScreeningImpl.class)
+        @JsonDeserialize(as = GameChampionshipImpl.ChampionshipImpl.ScreeningImpl.class)
         interface Screening {
 
             boolean isEnabled();
@@ -217,7 +217,7 @@ public interface AllChampionships {
             String getId();
         }
 
-        @JsonDeserialize(as = AllChampionshipsImpl.ChampionshipImpl.StreamImpl.class)
+        @JsonDeserialize(as = GameChampionshipImpl.ChampionshipImpl.StreamImpl.class)
         interface Stream {
 
             boolean isActive();
@@ -229,7 +229,7 @@ public interface AllChampionships {
             String getTitle();
         }
 
-        @JsonDeserialize(as = AllChampionshipsImpl.ChampionshipImpl.SubstitutionConfigurationImpl.class)
+        @JsonDeserialize(as = GameChampionshipImpl.ChampionshipImpl.SubstitutionConfigurationImpl.class)
         interface SubstitutionConfiguration {
 
             int getMaxSubstitutes();
