@@ -1,11 +1,12 @@
 package scot.oskar.jaceit.api.entity.championship;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import scot.oskar.jaceit.internal.entity.championship.GameChampionshipImpl;
+import scot.oskar.jaceit.internal.entity.championship.GameChampionshipDetailImpl;
 
 import java.util.List;
 import java.util.Map;
 
+@JsonDeserialize(as = GameChampionshipDetailImpl.class)
 public interface GameChampionshipDetail {
 
     boolean isAntiCheatRequired();
